@@ -1,24 +1,100 @@
-# Stripe + Supabase + GitHub Pages (Websit-SAAS)
+# Stripe + Supabase + GitHub Pages (Websit-SAAS) — steg för steg
 
-Mål: quiz → Stripe Checkout → success (form + bokning) → sparas i Supabase + mail till admin.
+Mål:
+1) Kund väljer paket (quiz)  
+2) Kund betalar (Stripe Checkout)  
+3) Kund fyller i underlag + bokar möte  
+4) Allt sparas i Supabase + mail skickas till `vberg024@gmail.com`
 
-## 1) Supabase (databas)
+Det här repot är redan förberett med:
+- GitHub Pages workflow: `.github/workflows/pages.yml`
+- Supabase schema: `supabase/schema.sql`
+- Edge Functions: `supabase/functions/*`
+- Frontend-flöde: quiz → checkout → success-formulär
 
-1. Skapa ett Supabase-projekt.
-2. Gå till **SQL Editor** och kör `supabase/schema.sql`.
+---
 
-## 2) Stripe (engångsbetalning)
+## 0) GitHub Pages (fix för ditt Actions-fel)
 
-1. Skapa 3 produkter + priser (one-time) i Stripe:
-   - Basic: 5 000 SEK
-   - Professional: 12 900 SEK
-   - Business: 24 900 SEK
-2. Notera Price IDs:
-   - `price_...` för Basic/Professional/Business.
+Felet du såg:
+`Resource not accessible by integration` / `Create Pages site failed`
 
-## 3) Supabase Edge Functions
+Gör detta i GitHub-repot `Viktor-berg5061/Websit-SAAS`:
 
-Installera Supabase CLI lokalt (en gång):
+1. **Settings → Pages**
+   - Under “Build and deployment”
+   - **Source: GitHub Actions**
+
+2. **Settings → Actions → General**
+   - Scrolla ner till “Workflow permissions”
+   - Välj **Read and write permissions**
+   - Spara
+
+3. Gå till **Actions** och kör workflow igen (Re-run).
+
+---
+
+## 1) Supabase — skapa projekt + databas
+
+1. Skapa ett nytt Supabase-projekt.
+2. Gå till **SQL Editor** i Supabase.
+3. Kör SQL från `supabase/schema.sql`.
+
+Det skapar tabeller:
+- `orders` (Stripe session + status)
+- `intake_forms` (kundens svar efter betalning)
+
+---
+
+## 2) Stripe (TEST MODE) — skapa priser
+
+Du sa att du kör sandbox/test mode. Perfekt.
+
+1. Stripe Dashboard → Products → Add product
+2. Skapa 3 produkter/priser (one-time):
+   - Basic: **5000 SEK**
+   - Professional: **12900 SEK**
+   - Business: **24900 SEK**
+3. Kopiera Price IDs (ser ut som `price_...`) för alla tre.
+
+---
+
+## 3) Resend (mail) — enklast/bäst
+
+För att du automatiskt ska få mail (utan att bygga en egen mailserver) använder vi Resend.
+
+1. Skapa konto på Resend.
+2. Skapa en API key (ser ut som `re_...`).
+3. Vi använder i test: `onboarding@resend.dev` som “from”.
+   - Sen när du har din .com kan du verifiera domänen och byta from-adress.
+
+---
+
+## 4) Supabase Edge Functions — secrets + deploy
+
+### 4.1 Lägg in secrets i Supabase
+
+Supabase Dashboard → **Project Settings → Functions → Secrets**:
+
+Stripe:
+- `STRIPE_SECRET_KEY` = Stripe secret key (test: `sk_test_...`)
+- `STRIPE_WEBHOOK_SECRET` = webhook signing secret (`whsec_...`)
+- `STRIPE_PRICE_BASIC` = `price_...`
+- `STRIPE_PRICE_PROFESSIONAL` = `price_...`
+- `STRIPE_PRICE_BUSINESS` = `price_...`
+
+Supabase:
+- `SUPABASE_URL` = din project URL
+- `SUPABASE_SERVICE_ROLE_KEY` = service role key (hemlig)
+
+Mail:
+- `ADMIN_EMAIL` = `vberg024@gmail.com`
+- `RESEND_API_KEY` = din Resend API key
+- `RESEND_FROM` = `onboarding@resend.dev`
+
+### 4.2 Deploy Edge Functions (lokalt på din dator)
+
+Installera Supabase CLI (en gång):
 
 ```powershell
 npm i -g supabase
@@ -32,26 +108,7 @@ cd "C:\Users\0901VIBE\OneDrive - Uddevalla kommun\Skrivbordet\Min\Websit-SAAS"
 supabase init
 ```
 
-Lägg in functions (de finns redan i `supabase/functions/` i repot).
-
-### 3.1 Sätt secrets i Supabase
-
-I Supabase Dashboard → **Project Settings → Functions → Secrets** lägg:
-
-- `STRIPE_SECRET_KEY` = Stripe secret key (börjar med `sk_...`)
-- `STRIPE_WEBHOOK_SECRET` = webhook signing secret (börjar med `whsec_...`)
-- `STRIPE_PRICE_BASIC` = `price_...`
-- `STRIPE_PRICE_PROFESSIONAL` = `price_...`
-- `STRIPE_PRICE_BUSINESS` = `price_...`
-- `SUPABASE_URL` = din project URL
-- `SUPABASE_SERVICE_ROLE_KEY` = service role key (hemlig, aldrig i frontend)
-- `ADMIN_EMAIL` = `vberg024@gmail.com`
-
-För mail via Resend (rekommenderat):
-- `RESEND_API_KEY` = Resend API key
-- `RESEND_FROM` = t.ex. `onboarding@resend.dev` (test) eller `info@din-domän.com` (när du har domän)
-
-### 3.2 Deploy functions
+Deploy:
 
 ```powershell
 supabase functions deploy create-checkout-session --no-verify-jwt
@@ -59,34 +116,59 @@ supabase functions deploy stripe-webhook --no-verify-jwt
 supabase functions deploy submit-intake --no-verify-jwt
 ```
 
-## 4) Stripe webhook
+---
 
-I Stripe Dashboard → **Developers → Webhooks**:
+## 5) Stripe webhook → Supabase
 
-1. Add endpoint:
-   - URL: `https://YOUR_PROJECT_REF.functions.supabase.co/stripe-webhook`
-2. Events:
-   - `checkout.session.completed`
-3. Kopiera `Signing secret` → lägg i `STRIPE_WEBHOOK_SECRET` (se ovan).
+Stripe Dashboard → Developers → Webhooks → Add endpoint
 
-## 5) GitHub Pages deploy
+- URL:
+  - `https://YOUR_PROJECT_REF.functions.supabase.co/stripe-webhook`
+- Events:
+  - `checkout.session.completed`
 
-1. Push till GitHub repo: `Viktor-berg5061/Websit-SAAS`.
-2. GitHub repo → **Settings → Pages**:
-   - Source: GitHub Actions
-3. GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_BOOKING_URL` (valfri, t.ex. Calendly)
+Kopiera “Signing secret” (`whsec_...`) och lägg in i Supabase secret:
+- `STRIPE_WEBHOOK_SECRET`
 
-## 6) Testflöde
+---
 
-1. Öppna siten.
-2. Välj paket → quiz → fortsätt → Stripe Checkout.
-3. Efter betalning kommer du tillbaka till samma sida med `?success=1&session_id=...`.
-4. Fyll i underlag + lägg in bokningslänk (om du har) → Skicka.
-5. Kontroll:
-   - Supabase `orders`: status ska vara `paid`
-   - Supabase `intake_forms`: ny rad
-   - Admin mail ska komma (om `RESEND_API_KEY` satt).
+## 6) GitHub Secrets (frontend)
+
+GitHub repo → Settings → Secrets and variables → Actions → New repository secret:
+
+- `VITE_SUPABASE_URL` = Supabase project URL
+- `VITE_SUPABASE_ANON_KEY` = Supabase anon/public key
+- `VITE_BOOKING_URL` = din bokningslänk (t.ex. Calendly) (valfri)
+
+---
+
+## 7) Testflöde (så du vet att allt funkar)
+
+1. Vänta tills GitHub Pages deploy är “green”.
+2. Öppna Pages-URL:
+   - `https://viktor-berg5061.github.io/Websit-SAAS/`
+3. Välj paket → quiz → fortsätt → Stripe Checkout.
+4. Betala med Stripe testkort:
+   - `4242 4242 4242 4242` (valfritt datum i framtiden, valfri CVC)
+5. Efter betalning kommer du tillbaka till siten med `?success=1&session_id=...`
+6. Fyll i formuläret → Skicka.
+
+Kontroll i Supabase:
+- `orders`: ska ha en rad med `status = paid`
+- `intake_forms`: ska ha en ny rad
+
+Mail:
+- ett mail ska komma till `vberg024@gmail.com` (via Resend)
+
+---
+
+## Om något strular
+
+- Om Stripe-betalning går igenom men `orders` är tom:
+  - webhook är inte kopplad rätt (URL eller `STRIPE_WEBHOOK_SECRET`)
+- Om success-sidan säger “Order not found yet”:
+  - webhook har inte hunnit skriva (vänta 5–10 sek och prova igen)
+- Om GitHub Pages visar 404 eller blankt:
+  - Settings → Pages → Source: GitHub Actions
+  - `vite.config.ts` har `base: './'` (finns redan)
 
