@@ -43,6 +43,8 @@ Gör detta i GitHub-repot `Viktor-berg5061/Websit-SAAS`:
 Det skapar tabeller:
 - `orders` (Stripe session + status)
 - `intake_forms` (kundens svar efter betalning)
+- `bookings` (bokade tider)
+- `busy_blocks` (blockade tider, för undantag)
 
 ---
 
@@ -114,6 +116,7 @@ Deploy:
 supabase functions deploy create-checkout-session --no-verify-jwt
 supabase functions deploy stripe-webhook --no-verify-jwt
 supabase functions deploy submit-intake --no-verify-jwt
+supabase functions deploy booked-slots --no-verify-jwt
 ```
 
 ---
@@ -171,4 +174,3 @@ Mail:
 - Om GitHub Pages visar 404 eller blankt:
   - Settings → Pages → Source: GitHub Actions
   - `vite.config.ts` har `base: './'` (finns redan)
-

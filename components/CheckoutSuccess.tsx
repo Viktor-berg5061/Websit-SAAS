@@ -4,16 +4,112 @@ type Props = {
   sessionId: string;
 };
 
+type Slot = { label: string; iso: string; disabled: boolean };
+
 export const CheckoutSuccess: React.FC<Props> = ({ sessionId }) => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [monthOffset, setMonthOffset] = useState(0);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null); // YYYY-MM-DD
+  const [booked, setBooked] = useState<Array<{ start_time: string; end_time: string; kind: string }>>([]);
+  const [bookingStart, setBookingStart] = useState<string | null>(null);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
   const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL as string | undefined;
   const supabaseAnonKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY as string | undefined;
   const bookingUrl = ((import.meta as any).env?.VITE_BOOKING_URL as string | undefined) || '';
 
   const ready = useMemo(() => Boolean(supabaseUrl && supabaseAnonKey && sessionId), [supabaseUrl, supabaseAnonKey, sessionId]);
+
+  const today = new Date();
+  const maxMonthsAhead = 2; // show current month + 2 = 3 months total
+  const monthDate = useMemo(() => {
+    const d = new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
+    return d;
+  }, [monthOffset]);
+
+  const monthLabel = useMemo(() => {
+    return new Intl.DateTimeFormat('sv-SE', { month: 'long', year: 'numeric' }).format(monthDate);
+  }, [monthDate]);
+
+  const daysInMonth = useMemo(() => {
+    const year = monthDate.getFullYear();
+    const month = monthDate.getMonth();
+    const start = new Date(year, month, 1);
+    const end = new Date(year, month + 1, 0);
+    const firstDay = start.getDay(); // 0 Sun..6 Sat
+    const leading = (firstDay + 6) % 7; // make Monday=0
+    const totalDays = end.getDate();
+    const cells: Array<{ day: number | null; dateKey: string | null; isPast: boolean }> = [];
+
+    for (let i = 0; i < leading; i++) cells.push({ day: null, dateKey: null, isPast: false });
+    for (let day = 1; day <= totalDays; day++) {
+      const d = new Date(year, month, day);
+      const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const isPast = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() < new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+      cells.push({ day, dateKey, isPast });
+    }
+    return cells;
+  }, [monthDate, today]);
+
+  const fetchBooked = async (day: string) => {
+    if (!supabaseUrl || !supabaseAnonKey) return;
+    setLoadingSlots(true);
+    setError(null);
+    try {
+      const res = await fetch(`${supabaseUrl.replace(/\/+$/, '')}/functions/v1/booked-slots`, {
+        method: 'POST',
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ day }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+      setBooked(json?.items || []);
+    } catch (err) {
+      setBooked([]);
+      setError(err instanceof Error ? err.message : 'Okänt fel');
+    } finally {
+      setLoadingSlots(false);
+    }
+  };
+
+  const generateSlots = (dayKey: string, bookedItems: Array<{ start_time: string; end_time: string }>): Slot[] => {
+    const [y, m, d] = dayKey.split('-').map(Number);
+    const day = new Date(y, (m || 1) - 1, d || 1, 0, 0, 0, 0);
+    const weekday = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Stockholm', weekday: 'short' }).format(day);
+    const isWeekend = weekday === 'Sat' || weekday === 'Sun';
+
+    const startHour = isWeekend ? 15 : 16;
+    const startMinute = isWeekend ? 0 : 30;
+    const lastStartHour = isWeekend ? 22 : 20;
+
+    const bookedStarts = new Set(bookedItems.map((b) => new Date(b.start_time).toISOString()));
+    const slots: Slot[] = [];
+
+    // Build times in local timezone (browser) and send ISO to server.
+    let cursor = new Date(y, (m || 1) - 1, d || 1, startHour, startMinute, 0, 0);
+    const endLast = new Date(y, (m || 1) - 1, d || 1, lastStartHour, 0, 0, 0);
+
+    while (cursor.getTime() <= endLast.getTime()) {
+      const iso = cursor.toISOString();
+      const label = new Intl.DateTimeFormat('sv-SE', { hour: '2-digit', minute: '2-digit' }).format(cursor);
+      const disabled = bookedStarts.has(iso);
+      slots.push({ label, iso, disabled });
+      cursor = new Date(cursor.getTime() + 60 * 60 * 1000);
+    }
+
+    return slots;
+  };
+
+  const slots = useMemo(() => {
+    if (!selectedDay) return [];
+    return generateSlots(selectedDay, booked);
+  }, [selectedDay, booked]);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,6 +130,7 @@ export const CheckoutSuccess: React.FC<Props> = ({ sessionId }) => {
         inspiration: String(form.get('inspiration') || ''),
         notes: String(form.get('notes') || ''),
         meeting_link: String(form.get('meeting_link') || bookingUrl || ''),
+        booking_start: bookingStart,
       };
 
       const res = await fetch(`${supabaseUrl!.replace(/\/+$/, '')}/functions/v1/submit-intake`, {
@@ -101,24 +198,94 @@ export const CheckoutSuccess: React.FC<Props> = ({ sessionId }) => {
           <div className="grid md:grid-cols-2 gap-16">
             <div className="space-y-6">
               <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-inner">
-                <h3 className="text-xl font-bold">1) Boka möte</h3>
+                <h3 className="text-xl font-bold">1) Välj en tid (1h)</h3>
                 <p className="text-slate-600 mt-2 text-sm">
-                  Klicka och välj en tid. Lägg länken i formuläret (så vi matchar rätt order).
+                  Vardagar är upptaget till 16:30 och senast 21:00. Helger från 15:00 till 23:00.
                 </p>
-                {bookingUrl ? (
-                  <a
-                    href={bookingUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-6 inline-flex items-center justify-center bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all w-full"
+
+                <div className="mt-6 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setMonthOffset((m) => Math.max(0, m - 1))}
+                    disabled={monthOffset === 0}
+                    className="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:border-slate-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Öppna bokning
-                  </a>
-                ) : (
-                  <p className="text-sm text-slate-500 mt-4 italic">
-                    Lägg in <code className="px-2 py-1 bg-white rounded border">VITE_BOOKING_URL</code> senare när du har din Calendly-länk.
-                  </p>
-                )}
+                    ←
+                  </button>
+                  <div className="text-sm font-bold capitalize">{monthLabel}</div>
+                  <button
+                    type="button"
+                    onClick={() => setMonthOffset((m) => Math.min(maxMonthsAhead, m + 1))}
+                    disabled={monthOffset >= maxMonthsAhead}
+                    className="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:border-slate-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    →
+                  </button>
+                </div>
+
+                <div className="mt-4 grid grid-cols-7 gap-2 text-center text-[11px] font-bold text-slate-500">
+                  {['M', 'T', 'O', 'T', 'F', 'L', 'S'].map((d) => (
+                    <div key={d}>{d}</div>
+                  ))}
+                </div>
+                <div className="mt-2 grid grid-cols-7 gap-2">
+                  {daysInMonth.map((cell, idx) => {
+                    if (!cell.day || !cell.dateKey) return <div key={idx} className="h-9" />;
+                    const active = selectedDay === cell.dateKey;
+                    const disabled = cell.isPast;
+                    return (
+                      <button
+                        key={cell.dateKey}
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => {
+                          setSelectedDay(cell.dateKey);
+                          setBookingStart(null);
+                          fetchBooked(cell.dateKey);
+                        }}
+                        className={`h-9 rounded-lg border text-sm transition ${
+                          active ? 'border-blue-600 bg-white shadow-sm font-bold' : 'border-slate-200 bg-white hover:border-blue-300'
+                        } ${disabled ? 'opacity-40 cursor-not-allowed hover:border-slate-200' : ''}`}
+                      >
+                        {cell.day}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-bold text-slate-900">Tider</p>
+                    {loadingSlots && <p className="text-xs text-slate-500">Laddar…</p>}
+                  </div>
+                  {!selectedDay ? (
+                    <p className="text-sm text-slate-500 mt-2">Välj en dag för att se lediga tider.</p>
+                  ) : (
+                    <div className="mt-3 grid grid-cols-3 gap-2">
+                      {slots.map((s) => {
+                        const active = bookingStart === s.iso;
+                        return (
+                          <button
+                            key={s.iso}
+                            type="button"
+                            disabled={s.disabled}
+                            onClick={() => setBookingStart(s.iso)}
+                            className={`px-3 py-2 rounded-lg border text-sm transition ${
+                              active ? 'border-blue-600 bg-blue-600 text-white font-bold' : 'border-slate-200 bg-white hover:border-blue-300'
+                            } ${s.disabled ? 'opacity-40 cursor-not-allowed hover:border-slate-200' : ''}`}
+                          >
+                            {s.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {selectedDay && !bookingStart && (
+                    <p className="text-xs text-slate-500 mt-3">
+                      Välj en tid. Du kan fortfarande skicka underlaget utan bokning, men det går snabbast om du väljer en tid.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
