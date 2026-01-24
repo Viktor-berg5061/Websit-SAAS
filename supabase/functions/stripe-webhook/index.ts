@@ -17,14 +17,14 @@ const getEnv = (key: string) => {
   return value;
 };
 
-const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), { apiVersion: "2023-10-16" });
-const supabase = createClient(getEnv("SUPABASE_URL"), getEnv("SUPABASE_SERVICE_ROLE_KEY"));
-
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
   try {
+    const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), { apiVersion: "2023-10-16" });
+    const supabase = createClient(getEnv("SUPABASE_URL"), getEnv("SUPABASE_SERVICE_ROLE_KEY"));
+
     const signature = req.headers.get("stripe-signature");
     if (!signature) {
       return new Response(JSON.stringify({ error: "Missing Stripe signature" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -65,4 +65,3 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: msg }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 });
-

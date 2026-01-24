@@ -2,6 +2,7 @@
 // Public endpoint (deploy with --no-verify-jwt)
 
 import Stripe from "npm:stripe@14.25.0";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -17,8 +18,6 @@ const getEnv = (key: string) => {
   return value;
 };
 
-const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), { apiVersion: "2023-10-16" });
-
 const priceIdForPackage = (pkg: PackageKey) => {
   if (pkg === "Basic") return getEnv("STRIPE_PRICE_BASIC");
   if (pkg === "Professional") return getEnv("STRIPE_PRICE_PROFESSIONAL");
@@ -30,6 +29,9 @@ Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
   try {
+    const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), { apiVersion: "2023-10-16" });
+    const supabase = createClient(getEnv("SUPABASE_URL"), getEnv("SUPABASE_SERVICE_ROLE_KEY"));
+
     const body = await req.json();
     const pkg = body?.package as PackageKey | undefined;
     const success_url = body?.success_url as string | undefined;
@@ -53,6 +55,19 @@ Deno.serve(async (req) => {
       customer_creation: "always",
     });
 
+    // Create a "pending" order row immediately so the success page can find it,
+    // even if Stripe's webhook takes a few seconds to arrive.
+    await supabase.from("orders").upsert(
+      {
+        stripe_session_id: session.id,
+        package: pkg,
+        status: "pending",
+        amount: 0,
+        currency: "sek",
+      },
+      { onConflict: "stripe_session_id" },
+    );
+
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -62,4 +77,3 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: msg }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 });
-

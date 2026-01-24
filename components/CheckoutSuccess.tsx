@@ -321,10 +321,17 @@ export const CheckoutSuccess: React.FC<Props> = ({ sessionId }) => {
                   <label className="text-xs font-bold uppercase text-slate-500">Övrigt</label>
                   <textarea name="notes" rows={3} className="w-full bg-white border border-slate-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition-all" placeholder="Allt som är viktigt att veta"></textarea>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase text-slate-500">Möteslänk (lägg in efter bokning)</label>
-                  <input name="meeting_link" defaultValue={bookingUrl} className="w-full bg-white border border-slate-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition-all" placeholder="https://..." />
-                </div>
+                {bookingUrl ? (
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase text-slate-500">Möteslänk (valfritt)</label>
+                    <input
+                      name="meeting_link"
+                      defaultValue={bookingUrl}
+                      className="w-full bg-white border border-slate-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition-all"
+                      placeholder="https://..."
+                    />
+                  </div>
+                ) : null}
 
                 {error && <p className="text-sm text-red-600 font-semibold">{error}</p>}
 

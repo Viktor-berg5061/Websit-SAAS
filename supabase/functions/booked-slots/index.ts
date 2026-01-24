@@ -16,8 +16,6 @@ const getEnv = (key: string) => {
   return value;
 };
 
-const supabase = createClient(getEnv("SUPABASE_URL"), getEnv("SUPABASE_SERVICE_ROLE_KEY"));
-
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") {
@@ -28,6 +26,8 @@ Deno.serve(async (req) => {
   }
 
   try {
+    const supabase = createClient(getEnv("SUPABASE_URL"), getEnv("SUPABASE_SERVICE_ROLE_KEY"));
+
     const body = await req.json();
     const day = String(body?.day || "").trim(); // YYYY-MM-DD
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
@@ -52,4 +52,3 @@ Deno.serve(async (req) => {
     });
   }
 });
-

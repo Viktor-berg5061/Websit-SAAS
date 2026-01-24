@@ -24,6 +24,20 @@ function App() {
   };
 
   useEffect(() => {
+    if (!successSessionId) return;
+
+    // Stripe redirects back to the same page, and the browser can restore the previous scroll position.
+    // Force the success view to always start at the top.
+    try {
+      if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+    } catch {
+      // ignore
+    }
+
+    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  }, [successSessionId]);
+
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const success = params.get('success');
     const canceled = params.get('canceled');
@@ -32,6 +46,7 @@ function App() {
     if (success === '1' && sessionId) {
       setSuccessSessionId(sessionId);
       setCheckoutError(null);
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       return;
     }
 

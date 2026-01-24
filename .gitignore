@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Supabase local config
+supabase/config.toml
+supabase/.gitignore
