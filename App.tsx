@@ -5,7 +5,6 @@ import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { Tiers } from './components/Tiers';
 import { Process } from './components/Process';
-import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { Portfolio } from './components/Portfolio';
 import { CheckoutSuccess } from './components/CheckoutSuccess';
@@ -80,7 +79,6 @@ function App() {
             <Features />
             <Process />
             <Tiers onChoosePackage={startCheckout} />
-            <ContactForm />
           </>
         ) : (
           <Portfolio />

@@ -338,7 +338,7 @@ export const Tiers: React.FC<TiersProps> = ({ onChoosePackage }) => {
               </ul>
               
               <a 
-                href="#contact"
+                href="#pricing"
                 onClick={(e) => {
                   e.preventDefault();
                   openQuiz(tier.name as PackageKey);
@@ -357,7 +357,7 @@ export const Tiers: React.FC<TiersProps> = ({ onChoosePackage }) => {
              <h3 className="text-2xl font-bold">Behöver du en helt skräddarsydd Enterprise-lösning?</h3>
              <p className="text-slate-500 max-w-xl text-sm italic leading-relaxed">För komplexa systemintegrationer, global skalbarhet och högsta säkerhetskrav. Vi arbetar med strategisk analys och djupt tekniskt kunnande för att bygga din plattform.</p>
            </div>
-           <a href="#contact" className="whitespace-nowrap bg-white border-2 border-slate-900 text-slate-900 px-10 py-4 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-all duration-300 text-center shadow-sm">
+           <a href="#pricing" className="whitespace-nowrap bg-white border-2 border-slate-900 text-slate-900 px-10 py-4 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-all duration-300 text-center shadow-sm">
              Begär offert
            </a>
         </div>

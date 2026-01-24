@@ -22,7 +22,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => 
     { name: 'Referenser', href: '#portfolio', view: 'portfolio' },
     { name: 'Process', href: '#process', view: 'home' },
     { name: 'Priser', href: '#pricing', view: 'home' },
-    { name: 'Kontakt', href: '#contact', view: 'home' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, link: typeof navLinks[0]) => {
@@ -70,12 +69,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => 
             </a>
           ))}
           <a 
-            href="#contact" 
+            href="#pricing" 
             onClick={(e) => {
               if (currentView !== 'home') {
                 e.preventDefault();
                 onViewChange('home');
-                setTimeout(() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                setTimeout(() => document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }
             }}
             className="bg-black text-white px-6 py-2 text-sm font-medium rounded-full hover:bg-slate-800 transition-all"

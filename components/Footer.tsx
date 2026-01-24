@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
             <li><a href="#features" className="hover:text-white transition-colors">Tjänster</a></li>
             <li><a href="#process" className="hover:text-white transition-colors">Processen</a></li>
             <li><a href="#pricing" className="hover:text-white transition-colors">Priser</a></li>
-            <li><a href="#contact" className="hover:text-white transition-colors">Starta Nu</a></li>
+            <li><a href="#pricing" className="hover:text-white transition-colors">Starta Nu</a></li>
           </ul>
         </div>
         
