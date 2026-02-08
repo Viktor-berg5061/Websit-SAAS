@@ -37,7 +37,7 @@ export const Features: React.FC = () => {
     <section id="features" className="py-24 bg-slate-50 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold">Varför välja Webbtjanst?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">Varför välja Webbtjänst?</h2>
           <p className="text-slate-600">Vi har revolutionerat webbutveckling genom att industrialisera processen utan att tappa den hantverksmässiga känslan.</p>
         </div>
         

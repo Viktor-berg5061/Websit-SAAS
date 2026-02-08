@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
         <div className="space-y-6">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-white rounded-sm"></div>
-            <span className="text-xl font-bold tracking-tighter uppercase">Webbtjanst</span>
+            <span className="text-xl font-bold tracking-tighter uppercase">Webbtjänst</span>
           </div>
           <p className="text-slate-400 text-sm leading-relaxed">
             Vi bygger morgondagens digitala närvaro idag. Med fokus på snabbhet, precision och modern design hjälper vi företag att lansera proffsiga hemsidor på rekordtid.
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
       </div>
       
       <div className="max-w-7xl mx-auto pt-20 mt-20 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-        <p>&copy; 2025 Webbtjanst. Alla rättigheter reserverade.</p>
+        <p>&copy; 2025 Webbtjänst. Alla rättigheter reserverade.</p>
         <div className="flex gap-6">
           <a href="#" className="hover:text-white">Integritetspolicy</a>
           <a href="#" className="hover:text-white">Allmänna villkor</a>

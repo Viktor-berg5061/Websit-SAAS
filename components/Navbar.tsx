@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => 
           onClick={() => onViewChange('home')}
         >
           <div className="w-8 h-8 bg-black rounded-sm"></div>
-          <span className="text-xl font-bold tracking-tighter uppercase">Webbtjanst</span>
+          <span className="text-xl font-bold tracking-tighter uppercase">Webbtjänst</span>
         </div>
         
         <div className="hidden md:flex items-center space-x-8">
