@@ -28,3 +28,5 @@ npm run typecheck
 Do not push or deploy without explicit owner approval. After a production deployment, verify the Actions run, the real domain, representative desktop/mobile pages, lead OPTIONS, checkout session creation and Stripe webhook health.
 
 Production note (2026-08-17): live Checkout session creation, AI-only coupon scope, session expiration and the signed Stripe-to-Convex webhook were verified without completing a payment.
+
+Navigation/favicon note (2026-08-17): home navigation uses the canonical root path `/`, never `/index.html`. The homepage publishes stable SVG, ICO, 48 px PNG and Apple touch favicon declarations. After changing `site/favicon.svg`, regenerate raster assets with `python scripts/generate-favicons.py`.

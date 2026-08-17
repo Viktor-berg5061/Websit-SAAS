@@ -2,7 +2,17 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve("site");
-const required = ["index.html", "starta-projekt.html", "robots.txt", "sitemap.xml", "CNAME"];
+const required = [
+  "index.html",
+  "starta-projekt.html",
+  "robots.txt",
+  "sitemap.xml",
+  "CNAME",
+  "favicon.svg",
+  "favicon.ico",
+  "favicon-48x48.png",
+  "apple-touch-icon.png",
+];
 const forbidden = [
   "trycloudflare.com",
   "rosy-parakeet-562",
@@ -38,6 +48,26 @@ for (const file of inspectable) {
       throw new Error(`Forbidden stale value ${JSON.stringify(value)} in ${path.relative(root, file)}`);
     }
   }
+}
+
+for (const file of htmlFiles) {
+  const content = fs.readFileSync(file, "utf8");
+  if (/href="(?:\.\.\/)*index\.html"/.test(content)) {
+    throw new Error(`Home link exposes index.html in ${path.relative(root, file)}`);
+  }
+}
+
+const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
+for (const value of [
+  '<link rel="icon" href="/favicon.ico" sizes="any">',
+  '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+  '<link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48">',
+  '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
+]) {
+  if (!home.includes(value)) throw new Error(`Homepage favicon declaration is missing: ${value}`);
+}
+if (!home.includes('window.location.pathname === "/index.html"')) {
+  throw new Error("Homepage does not clean the legacy /index.html address");
 }
 
 const project = fs.readFileSync(path.join(root, "starta-projekt.html"), "utf8");
