@@ -1,0 +1,21 @@
+{
+  "name": "webbtjanst-checkout-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "convex:dev": "convex dev",
+    "convex:push": "convex dev --once"
+  },
+  "dependencies": {
+    "convex": "1.44.0",
+    "stripe": "22.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "tsx": "4.23.12",
+    "typescript": "7.0.2"
+  }
+}

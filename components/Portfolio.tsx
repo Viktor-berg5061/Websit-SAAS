@@ -14,6 +14,44 @@ const portfolioItems = [
   { id: 9, title: "Vantage Fitness", category: "Hälsa & Sport", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200", stats: { speed: "0.5s", seo: "97", conversion: "+71%" }, tags: ["Dynamic", "Gym", "Performance"] }
 ];
 
+type DemoLinkProps = {
+  targetId: string;
+  className?: string;
+  children: React.ReactNode;
+  ariaLabel?: string;
+};
+
+const demoPageForTarget: Record<string, string> = {
+  'lume-projects': 'projects', 'lume-studio': 'studio', 'lume-contact': 'contact',
+  'savor-menu': 'menu', 'savor-events': 'events', 'savor-booking': 'contact',
+  'nova-infrastructure': 'platform', 'nova-security': 'security', 'nova-pricing': 'pricing', 'nova-access': 'docs', 'nova-docs': 'docs', 'nova-sdk': 'docs',
+  'legal-expertise': 'expertise', 'legal-attorneys': 'attorneys', 'legal-insights': 'insights', 'legal-consultation': 'contact',
+  'pulse-lab': 'lab', 'pulse-projects': 'work',
+  'eco-products': 'collection', 'eco-philosophy': 'journal', 'eco-account': 'account',
+  'quantum-applications': 'applications', 'quantum-api': 'docs',
+  'nordic-listings': 'listings', 'nordic-valuation': 'valuation', 'nordic-contact': 'contact',
+  'fitness-compound': 'compound', 'fitness-membership': 'membership',
+};
+
+/** Uses a real, copyable demo-page URL when the demo has a matching page. */
+const DemoLink = ({ targetId, className = '', children, ariaLabel }: DemoLinkProps) => (
+  <button
+    type="button"
+    className={className}
+    aria-label={ariaLabel}
+    onClick={() => {
+      const page = demoPageForTarget[targetId];
+      if (page && new URLSearchParams(window.location.search).get('demo')) {
+        window.dispatchEvent(new CustomEvent('demo-page-request', { detail: { page } }));
+        return;
+      }
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }}
+  >
+    {children}
+  </button>
+);
+
 // --- SIMULATION COMPONENTS ---
 
 const LumeSim = () => (
@@ -21,7 +59,9 @@ const LumeSim = () => (
     <nav className="p-12 flex justify-between items-center border-b border-slate-100">
       <div className="text-2xl font-black uppercase tracking-tighter">LUME</div>
       <div className="flex gap-12 text-[10px] font-bold uppercase tracking-[0.4em] opacity-40">
-        <span>Projects</span><span>Studio</span><span>Contact</span>
+        <DemoLink targetId="lume-projects" className="hover:opacity-100 transition-opacity">Projects</DemoLink>
+        <DemoLink targetId="lume-studio" className="hover:opacity-100 transition-opacity">Studio</DemoLink>
+        <DemoLink targetId="lume-contact" className="hover:opacity-100 transition-opacity">Contact</DemoLink>
       </div>
     </nav>
     <section className="px-12 py-32 space-y-20">
@@ -57,7 +97,7 @@ const LumeSim = () => (
     </section>
 
     {/* Section 4: Philosophy & Materials */}
-    <section className="py-40 px-12 border-t border-slate-100 grid grid-cols-12 gap-24 items-center">
+    <section id="lume-studio" className="py-40 px-12 border-t border-slate-100 grid grid-cols-12 gap-24 items-center scroll-mt-24">
        <div className="col-span-7 space-y-16">
           <h2 className="text-8xl tracking-tighter">Honest Materiality.</h2>
           <div className="grid grid-cols-2 gap-12">
@@ -109,7 +149,7 @@ const LumeSim = () => (
     </section>
 
     {/* Section 6: Selected Works Extension */}
-    <section className="py-40 px-12 text-center space-y-24">
+    <section id="lume-projects" className="py-40 px-12 text-center space-y-24 scroll-mt-24">
       <span className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300">Selected Works 2025</span>
       <div className="grid grid-cols-3 gap-12">
         {[
@@ -129,9 +169,9 @@ const LumeSim = () => (
         ))}
       </div>
     </section>
-    <footer className="p-12 border-t border-slate-100 flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em]">
+    <footer id="lume-contact" className="p-12 border-t border-slate-100 flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] scroll-mt-24">
       <p>© 2025 Lume Architecture</p>
-      <div className="flex gap-8"><span>Instagram</span><span>LinkedIn</span></div>
+      <div className="flex gap-8"><DemoLink targetId="lume-contact">Instagram</DemoLink><DemoLink targetId="lume-contact">LinkedIn</DemoLink></div>
     </footer>
   </div>
 );
@@ -141,7 +181,9 @@ const SavorSim = () => (
     <nav className="p-10 flex justify-between items-center fixed w-full top-0 z-50 bg-[#fffdfa]/80 backdrop-blur-xl">
       <div className="text-3xl font-serif font-black text-amber-900 italic">SAVOR.</div>
       <div className="flex gap-10 text-[10px] font-bold uppercase tracking-widest text-amber-900/40">
-        <span>Meny</span><span>Event</span><span>Boka</span>
+        <DemoLink targetId="savor-menu" className="hover:text-amber-900 transition-colors">Meny</DemoLink>
+        <DemoLink targetId="savor-events" className="hover:text-amber-900 transition-colors">Event</DemoLink>
+        <DemoLink targetId="savor-booking" className="hover:text-amber-900 transition-colors">Boka</DemoLink>
       </div>
     </nav>
     <section className="relative h-screen flex items-center justify-center text-center px-12 overflow-hidden">
@@ -149,10 +191,10 @@ const SavorSim = () => (
       <div className="relative z-10 space-y-12">
         <h1 className="text-8xl md:text-[12rem] font-serif text-white leading-[0.8] tracking-tight">Elegance<br/><span className="italic font-normal opacity-70">on a plate.</span></h1>
         <p className="text-2xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">Stockholm's premier bespoke catering for high-end events and corporate experiences.</p>
-        <button className="bg-amber-600 text-white px-12 py-6 rounded-full font-bold uppercase text-[11px] tracking-widest hover:scale-105 transition-transform shadow-2xl">Start Planning</button>
+        <DemoLink targetId="savor-booking" className="bg-amber-600 text-white px-12 py-6 rounded-full font-bold uppercase text-[11px] tracking-widest hover:scale-105 transition-transform shadow-2xl">Start Planning</DemoLink>
       </div>
     </section>
-    <section className="py-40 px-12 max-w-7xl mx-auto grid md:grid-cols-2 gap-32 items-center">
+    <section id="savor-menu" className="py-40 px-12 max-w-7xl mx-auto grid md:grid-cols-2 gap-32 items-center scroll-mt-28">
       <div className="space-y-12">
         <h2 className="text-6xl font-serif font-bold text-amber-950">A commitment to local harvest.</h2>
         <p className="text-lg text-slate-500 leading-relaxed">We source every ingredient from artisan producers around the Mälaren valley. Our menu changes with the moon, the sun, and the soil.</p>
@@ -179,7 +221,7 @@ const SavorSim = () => (
     </section>
 
     {/* Section 4: Bespoke Occasions */}
-    <section className="py-40 px-12 bg-amber-50">
+    <section id="savor-events" className="py-40 px-12 bg-amber-50 scroll-mt-28">
        <div className="max-w-7xl mx-auto text-center space-y-24">
           <h2 className="text-7xl font-serif font-black text-amber-950">Events Beyond<br/>Expectation.</h2>
           <div className="grid grid-cols-3 gap-12">
@@ -234,7 +276,7 @@ const SavorSim = () => (
        </div>
     </section>
 
-    <footer className="bg-amber-950 text-amber-100/40 py-24 px-12 text-center text-[10px] font-bold uppercase tracking-[0.4em]">
+    <footer id="savor-booking" className="bg-amber-950 text-amber-100/40 py-24 px-12 text-center text-[10px] font-bold uppercase tracking-[0.4em] scroll-mt-28">
        <div className="text-3xl text-amber-500 mb-12 italic font-serif font-black">SAVOR.</div>
        <p>Digitalvägen 1 — 111 22 Stockholm — info@savor.se</p>
     </footer>
@@ -251,11 +293,11 @@ const NovaSim = () => (
         <span className="font-black text-2xl tracking-tighter italic">NOVA</span>
       </div>
       <div className="hidden md:flex gap-12 text-[10px] font-black uppercase tracking-widest text-slate-500">
-        <span className="hover:text-white cursor-pointer transition-colors">Infrastructure</span>
-        <span className="hover:text-white cursor-pointer transition-colors">Security</span>
-        <span className="hover:text-white cursor-pointer transition-colors">Pricing</span>
+        <DemoLink targetId="nova-infrastructure" className="hover:text-white transition-colors">Infrastructure</DemoLink>
+        <DemoLink targetId="nova-security" className="hover:text-white transition-colors">Security</DemoLink>
+        <DemoLink targetId="nova-pricing" className="hover:text-white transition-colors">Pricing</DemoLink>
       </div>
-      <button className="bg-blue-600 px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-[0_10px_30px_rgba(37,99,235,0.3)]">Get Access</button>
+      <DemoLink targetId="nova-access" className="bg-blue-600 px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-[0_10px_30px_rgba(37,99,235,0.3)]">Get Access</DemoLink>
     </nav>
     <section className="pt-40 pb-60 px-12 text-center relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-blue-600/10 blur-[200px] rounded-full"></div>
@@ -267,7 +309,7 @@ const NovaSim = () => (
     </section>
 
     {/* Section 3: Security Protocol */}
-    <section className="py-40 px-12 relative z-10">
+    <section id="nova-security" className="py-40 px-12 relative z-10 scroll-mt-24">
        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-24 items-center">
           <div className="col-span-5 space-y-12">
              <div className="inline-block bg-blue-600/20 text-blue-400 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Security Level: Omega</div>
@@ -294,7 +336,7 @@ const NovaSim = () => (
     </section>
 
     {/* Section 4: Integration Ecosystem */}
-    <section className="py-40 bg-white/5 border-y border-white/5">
+    <section id="nova-infrastructure" className="py-40 bg-white/5 border-y border-white/5 scroll-mt-24">
        <div className="max-w-7xl mx-auto px-12 text-center space-y-24">
           <div className="space-y-6">
              <h2 className="text-8xl font-black tracking-tighter uppercase">Unified Stack.</h2>
@@ -310,24 +352,34 @@ const NovaSim = () => (
        </div>
     </section>
 
-    {/* Section 5: API & Documentation */}
-    <section className="py-60 px-12">
+    {/* Section 5: Access plans */}
+    <section id="nova-pricing" className="py-40 px-12 border-b border-white/5 scroll-mt-24">
+      <div className="max-w-7xl mx-auto space-y-16">
+        <div className="flex items-end justify-between gap-12"><div><p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Access layers</p><h2 className="text-7xl font-black tracking-tighter uppercase">Compute that fits.</h2></div><p className="max-w-md text-slate-500">A local product-page demonstration of how a technical offer can explain scope before an access request.</p></div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[['Edge','For rapid prototypes','15ms global edge'],['Scale','For live products','Autonomous clusters'],['Frontier','For research teams','Dedicated neural capacity']].map(([name, detail, feature]) => <div key={name} className="rounded-[2rem] border border-white/10 p-10 bg-white/[0.02] space-y-8"><p className="text-2xl font-black uppercase">{name}</p><p className="text-slate-400">{detail}</p><p className="text-xs font-black uppercase tracking-widest text-blue-400">{feature}</p><DemoLink targetId="nova-access" className="text-xs font-black uppercase tracking-widest hover:text-blue-400">View access path →</DemoLink></div>)}
+        </div>
+      </div>
+    </section>
+
+    {/* Section 6: API & Documentation */}
+    <section id="nova-access" className="py-60 px-12 scroll-mt-24">
        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-24 items-start">
           <div className="col-span-4 space-y-12 sticky top-40">
              <h2 className="text-6xl font-black italic uppercase leading-none">Developer<br/>First.</h2>
              <p className="text-slate-500 leading-relaxed">Byggt av ingenjörer, för ingenjörer. Våra REST- och GraphQL-API:er ger granulär kontroll över varje aspekt av din beräkningslivscykel.</p>
              <div className="flex flex-col gap-4">
-                <button className="flex items-center justify-between bg-white text-black p-6 font-black uppercase tracking-widest text-xs">
+                <DemoLink targetId="nova-docs" className="flex items-center justify-between bg-white text-black p-6 font-black uppercase tracking-widest text-xs">
                    <span>Explore Docs</span>
                    <span>→</span>
-                </button>
-                <button className="flex items-center justify-between border border-white/10 p-6 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
+                </DemoLink>
+                <DemoLink targetId="nova-sdk" className="flex items-center justify-between border border-white/10 p-6 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
                    <span>SDK Reference</span>
                    <span>→</span>
-                </button>
+                </DemoLink>
              </div>
           </div>
-          <div className="col-span-8 bg-[#0a0f1e] border border-white/10 rounded-[2.5rem] p-12 font-mono text-sm leading-relaxed overflow-hidden shadow-4xl">
+          <div id="nova-docs" className="col-span-8 bg-[#0a0f1e] border border-white/10 rounded-[2.5rem] p-12 font-mono text-sm leading-relaxed overflow-hidden shadow-4xl scroll-mt-24">
              <div className="flex gap-2 mb-10">
                 <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
@@ -343,7 +395,7 @@ const NovaSim = () => (
                 <div className="text-slate-300">modality: <span className="text-amber-400">'neural-compute'</span>,</div>
                 <div className="text-slate-300">autoScale: <span className="text-purple-400">true</span></div>
              </div>
-             <div className="text-blue-400">{'}'});</div>
+             <div id="nova-sdk" className="text-blue-400">{'}'});</div>
              <br/>
              <div className="text-slate-500">// Start autonomous scaling protocol</div>
              <div className="text-blue-400"><span className="text-white">nova</span>.on(<span className="text-amber-400">'spike'</span>, (data) ={'>'} {'{'}</div>
@@ -362,20 +414,22 @@ const VantageLegalSim = () => (
     <header className="bg-white p-12 flex justify-between items-center border-b border-slate-200">
       <div className="text-3xl font-bold border-l-[12px] border-[#0f172a] pl-8 uppercase tracking-tighter italic">VANTAGE LEGAL</div>
       <div className="flex gap-12 font-sans text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">
-        <span>Expertise</span><span>Attorneys</span><span>Insights</span>
+        <DemoLink targetId="legal-expertise" className="hover:opacity-100 transition-opacity">Expertise</DemoLink>
+        <DemoLink targetId="legal-attorneys" className="hover:opacity-100 transition-opacity">Attorneys</DemoLink>
+        <DemoLink targetId="legal-insights" className="hover:opacity-100 transition-opacity">Insights</DemoLink>
       </div>
     </header>
     <section className="grid grid-cols-2 gap-24 p-24 items-center min-h-[90vh]">
       <div className="space-y-12">
         <h1 className="text-8xl font-bold leading-tight tracking-tight">Integrity in<br/>every brief.</h1>
         <p className="font-sans text-xl text-slate-500 leading-relaxed max-w-lg">Providing strategic legal council for international commerce, complex litigation, and private equity transactions.</p>
-        <button className="font-sans bg-[#0f172a] text-white px-16 py-6 text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">Consult Senior Partner</button>
+        <DemoLink targetId="legal-consultation" className="font-sans bg-[#0f172a] text-white px-16 py-6 text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">Consult Senior Partner</DemoLink>
       </div>
       <div className="relative">
         <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200" className="w-full h-full object-cover shadow-2xl border-[30px] border-white" />
       </div>
     </section>
-    <section className="bg-white py-40 px-24 space-y-24">
+    <section id="legal-expertise" className="bg-white py-40 px-24 space-y-24 scroll-mt-24">
        <div className="text-center space-y-6 max-w-4xl mx-auto">
           <h2 className="text-5xl font-bold italic">A legacy of excellence since 1984.</h2>
           <p className="font-sans text-slate-400 text-sm uppercase tracking-widest font-bold">Stockholm — London — New York</p>
@@ -422,7 +476,7 @@ const VantageLegalSim = () => (
     </section>
 
     {/* Section 4: Senior Leadership */}
-    <section className="bg-[#0f172a] text-white py-40 px-24">
+    <section id="legal-attorneys" className="bg-[#0f172a] text-white py-40 px-24 scroll-mt-24">
        <div className="max-w-7xl mx-auto space-y-32">
           <div className="flex justify-between items-end">
              <h2 className="text-8xl font-bold tracking-tighter">The Senior<br/>Partners.</h2>
@@ -450,7 +504,7 @@ const VantageLegalSim = () => (
     </section>
 
     {/* Section 5: Strategic Briefs */}
-    <section className="py-40 px-24 bg-white">
+    <section id="legal-insights" className="py-40 px-24 bg-white scroll-mt-24">
        <div className="max-w-5xl mx-auto space-y-24">
           <div className="text-center space-y-6">
              <h2 className="text-5xl font-bold italic">Strategic Insights.</h2>
@@ -475,6 +529,9 @@ const VantageLegalSim = () => (
           </div>
        </div>
     </section>
+    <section id="legal-consultation" className="bg-slate-100 px-24 py-32 font-sans scroll-mt-24">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_auto] items-end gap-12"><div className="space-y-5"><p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Confidential consultation</p><h2 className="font-serif text-6xl font-bold">A considered next step.</h2><p className="max-w-xl text-slate-500 leading-relaxed">A local preview contact destination: it explains the path without collecting or sending any visitor information.</p></div><DemoLink targetId="legal-expertise" className="border border-slate-900 px-8 py-4 font-black uppercase text-[10px] tracking-widest">Review expertise ↑</DemoLink></div>
+    </section>
   </div>
 );
 
@@ -482,14 +539,14 @@ const PulseSim = () => (
   <div className="bg-[#ff3e00] text-white font-sans selection:bg-black selection:text-white pb-40">
     <nav className="p-12 flex justify-between items-center fixed w-full top-0 z-50 mix-blend-difference uppercase font-black tracking-tighter text-4xl">
       <div>PULSE.</div>
-      <div className="text-xl">☰</div>
+      <DemoLink targetId="pulse-lab" className="text-xl" ariaLabel="Öppna laboratoriet">☰</DemoLink>
     </nav>
     <section className="h-screen flex flex-col justify-end p-12 pb-24 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[35rem] font-black opacity-10 select-none">PULSE</div>
       <h1 className="text-[20rem] font-black leading-[0.7] tracking-tighter animate-in slide-in-from-left-24 duration-1000">BEYOND<br/>DESIGN.</h1>
-      <div className="flex justify-between items-end mt-20">
-        <p className="text-5xl font-black italic max-w-4xl">A global creative laboratory focused on radical brand transformations.</p>
-        <div className="w-24 h-24 border-[10px] border-white flex items-center justify-center text-4xl font-black">→</div>
+      <div className="flex flex-col gap-8 md:flex-row md:justify-between md:items-end mt-20">
+        <p className="text-3xl sm:text-5xl font-black italic max-w-4xl break-words">A global creative laboratory focused on radical brand transformations.</p>
+        <DemoLink targetId="pulse-lab" className="w-24 h-24 border-[10px] border-white flex items-center justify-center text-4xl font-black" ariaLabel="Visa laboratoriet">→</DemoLink>
       </div>
     </section>
     <section className="bg-black py-60 px-12 space-y-60">
@@ -518,14 +575,14 @@ const PulseSim = () => (
     </section>
 
     {/* Section 3: The Lab */}
-    <section className="py-60 px-12 bg-white text-black">
+    <section id="pulse-lab" className="py-60 px-12 bg-white text-black scroll-mt-24">
        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-24 items-start">
           <div className="col-span-4 sticky top-40 space-y-12">
              <h2 className="text-9xl font-black tracking-tighter uppercase leading-[0.8]">The Lab.</h2>
              <p className="text-2xl font-black italic">Experimental UI / Generative Code / Radical Simplicity.</p>
-             <button className="bg-black text-white px-12 py-6 text-xs font-black uppercase tracking-[0.3em]">Enter Laboratory</button>
+             <DemoLink targetId="pulse-projects" className="bg-black text-white px-12 py-6 text-xs font-black uppercase tracking-[0.3em]">Enter Laboratory</DemoLink>
           </div>
-          <div className="col-span-8 space-y-32">
+          <div id="pulse-projects" className="col-span-8 space-y-32 scroll-mt-24">
              {[
                { name: "NEURAL CANVAS", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200" },
                { name: "KINETIC TYPE", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200" },
@@ -583,7 +640,9 @@ const EcoGardenSim = () => (
     <nav className="p-10 border-b border-[#16423c]/5 flex justify-between items-center bg-white sticky top-0 z-50">
       <div className="text-3xl font-black tracking-tighter uppercase text-[#6a9c89]">ECOGARDEN.</div>
       <div className="flex gap-12 text-[11px] font-bold uppercase tracking-widest opacity-60">
-        <span>Produkter</span><span>Filosofi</span><span>Konto (0)</span>
+        <DemoLink targetId="eco-products" className="hover:opacity-100 transition-opacity">Produkter</DemoLink>
+        <DemoLink targetId="eco-philosophy" className="hover:opacity-100 transition-opacity">Filosofi</DemoLink>
+        <DemoLink targetId="eco-account" className="hover:opacity-100 transition-opacity">Konto (0)</DemoLink>
       </div>
     </nav>
     <section className="px-12 py-32 grid md:grid-cols-2 gap-24 items-center">
@@ -591,7 +650,7 @@ const EcoGardenSim = () => (
         <span className="bg-[#6a9c89]/10 text-[#6a9c89] px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Cirkulär Inredning</span>
         <h1 className="text-9xl font-serif font-black leading-[0.85]">Let home<br/><span className="italic font-normal opacity-40 underline">breathe.</span></h1>
         <p className="text-xl leading-relaxed max-w-lg opacity-70">Hållbart anskaffade växter och handgjorda lergods för den moderna fristaden.</p>
-        <button className="bg-[#16423c] text-white px-16 py-6 rounded-full font-bold uppercase text-xs tracking-widest shadow-2xl hover:bg-[#6a9c89] transition-all">Shop Collection</button>
+        <DemoLink targetId="eco-products" className="bg-[#16423c] text-white px-16 py-6 rounded-full font-bold uppercase text-xs tracking-widest shadow-2xl hover:bg-[#6a9c89] transition-all">Shop Collection</DemoLink>
       </div>
       <div className="relative">
         <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=1200" className="w-full aspect-[4/5] object-cover rounded-[5rem] shadow-2xl" />
@@ -599,10 +658,10 @@ const EcoGardenSim = () => (
     </section>
 
     {/* Section 2: Curated Collection */}
-    <section className="bg-white py-40 px-12">
+    <section id="eco-products" className="bg-white py-40 px-12 scroll-mt-24">
        <div className="flex justify-between items-end mb-24 max-w-7xl mx-auto">
           <h2 className="text-6xl font-serif font-black text-[#16423c]">Curated for life.</h2>
-          <span className="text-xs font-bold border-b-2 border-[#16423c] pb-1 uppercase tracking-widest cursor-pointer">View All</span>
+          <DemoLink targetId="eco-products" className="text-xs font-bold border-b-2 border-[#16423c] pb-1 uppercase tracking-widest">View All</DemoLink>
        </div>
        <div className="grid grid-cols-4 gap-12 max-w-7xl mx-auto">
           {[
@@ -625,7 +684,7 @@ const EcoGardenSim = () => (
     </section>
 
     {/* Section 3: The Workshop */}
-    <section className="py-40 bg-[#f4f6f0] px-12">
+    <section id="eco-philosophy" className="py-40 bg-[#f4f6f0] px-12 scroll-mt-24">
        <div className="max-w-7xl mx-auto grid grid-cols-2 gap-32 items-center">
           <div className="relative">
              <img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?q=80&w=800" className="w-full aspect-square object-cover rounded-[5rem] shadow-2xl" />
@@ -675,7 +734,7 @@ const EcoGardenSim = () => (
     </section>
 
     {/* Section 5: Instagram Grid */}
-    <section className="py-40 bg-[#fcfdfa] border-t border-[#16423c]/5">
+    <section id="eco-account" className="py-40 bg-[#fcfdfa] border-t border-[#16423c]/5 scroll-mt-24">
        <div className="max-w-7xl mx-auto px-12 space-y-12">
           <div className="flex justify-between items-center">
              <h3 className="text-2xl font-serif font-bold">@ecogarden_stockholm</h3>
@@ -711,7 +770,7 @@ const QuantumAISim = () => (
         <div className="w-10 h-10 border-2 border-white rotate-45 flex items-center justify-center"><div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div></div>
         QUANTUM AI
       </div>
-      <button className="text-[10px] font-black uppercase tracking-widest border border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all">Request API</button>
+      <DemoLink targetId="quantum-api" className="text-[10px] font-black uppercase tracking-widest border border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all">Request API</DemoLink>
     </nav>
     <section className="px-12 py-40 text-center relative z-10">
       <h1 className="text-[18rem] font-black leading-[0.7] tracking-tighter mb-24 animate-in zoom-in-110 duration-[2s]">THE RAW<br/>BRAIN.</h1>
@@ -754,7 +813,7 @@ const QuantumAISim = () => (
     </section>
 
     {/* Section 3: Applications */}
-    <section className="py-40 px-12 bg-white/5 relative z-10">
+    <section id="quantum-applications" className="py-40 px-12 bg-white/5 relative z-10 scroll-mt-24">
        <div className="max-w-7xl mx-auto text-center space-y-24">
           <h2 className="text-7xl font-black uppercase tracking-tighter">Beyond Human Limits.</h2>
           <div className="grid grid-cols-4 gap-8">
@@ -781,8 +840,11 @@ const QuantumAISim = () => (
           <span className="text-[10px] font-black uppercase tracking-[0.5em] text-purple-500">The Mission Statement</span>
           <h3 className="text-9xl font-black tracking-tighter italic leading-none">Intelligens är den nya elektriciteten.</h3>
           <p className="text-2xl text-slate-400 font-light leading-relaxed">Vi bygger inte verktyg; vi bygger substratet på vilket framtidens civilisation kommer att beräknas. Vårt mål är att lösa det olösliga.</p>
-          <button className="bg-purple-600 text-white px-20 py-8 rounded-full font-black uppercase tracking-widest mt-12 hover:scale-105 transition-all shadow-[0_0_50px_rgba(147,51,234,0.4)]">Initialize Protocol</button>
+          <DemoLink targetId="quantum-api" className="bg-purple-600 text-white px-20 py-8 rounded-full font-black uppercase tracking-widest mt-12 hover:scale-105 transition-all shadow-[0_0_50px_rgba(147,51,234,0.4)]">Initialize Protocol</DemoLink>
        </div>
+    </section>
+    <section id="quantum-api" className="relative z-10 mx-12 mb-32 rounded-[3rem] border border-purple-400/20 bg-purple-500/10 px-12 py-20 scroll-mt-24">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_auto] items-end gap-12"><div className="space-y-5"><p className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-400">Protocol access</p><h2 className="text-6xl font-black uppercase tracking-tighter">A clear developer path.</h2><p className="max-w-2xl text-slate-400 leading-relaxed">This showcase keeps the experience local: it demonstrates an API access destination without creating credentials, requests, or external traffic.</p></div><DemoLink targetId="quantum-applications" className="border border-white/30 px-8 py-4 text-xs font-black uppercase tracking-widest">Review applications ↑</DemoLink></div>
     </section>
   </div>
 );
@@ -792,14 +854,16 @@ const NordicSim = () => (
     <nav className="px-12 py-10 flex justify-between items-center border-b border-slate-50">
       <div className="text-2xl font-light tracking-[0.5em] uppercase">NORDIC HOME</div>
       <div className="flex gap-12 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-        <span className="text-slate-900 border-b border-slate-900">Objekt</span><span>Värdering</span><span>Kontakt</span>
+        <DemoLink targetId="nordic-listings" className="text-slate-900 border-b border-slate-900">Objekt</DemoLink>
+        <DemoLink targetId="nordic-valuation">Värdering</DemoLink>
+        <DemoLink targetId="nordic-contact">Kontakt</DemoLink>
       </div>
     </nav>
     <section className="px-12 py-32 grid grid-cols-12 gap-24 items-center">
       <div className="col-span-4 space-y-12">
         <h1 className="text-9xl font-serif font-black leading-[0.8] tracking-tighter">Living<br/>Art.</h1>
         <p className="text-xl text-slate-400 leading-relaxed font-light">Vi kurerar bostäder som inspirerar. Nordisk minimalism möter internationell lyx i vår exklusiva portfölj.</p>
-        <button className="bg-slate-900 text-white px-16 py-6 text-xs font-bold uppercase tracking-widest hover:bg-slate-700 transition-all">Explore Listings</button>
+        <DemoLink targetId="nordic-listings" className="bg-slate-900 text-white px-16 py-6 text-xs font-bold uppercase tracking-widest hover:bg-slate-700 transition-all">Explore Listings</DemoLink>
       </div>
       <div className="col-span-8">
         <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" className="w-full aspect-[16/10] object-cover rounded-sm shadow-3xl" />
@@ -807,7 +871,7 @@ const NordicSim = () => (
     </section>
 
     {/* Section 2: Current Curations */}
-    <section className="bg-slate-50 py-40 px-12 space-y-24">
+    <section id="nordic-listings" className="bg-slate-50 py-40 px-12 space-y-24 scroll-mt-24">
        <h2 className="text-6xl font-serif font-black text-center">Current Curations</h2>
        <div className="grid grid-cols-2 gap-12 max-w-7xl mx-auto">
           {[
@@ -848,11 +912,11 @@ const NordicSim = () => (
     </section>
 
     {/* Section 4: Services */}
-    <section className="py-40 px-12 bg-slate-900 text-white">
+    <section id="nordic-valuation" className="py-40 px-12 bg-slate-900 text-white scroll-mt-24">
        <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-end mb-32">
              <h2 className="text-8xl font-serif font-black tracking-tighter">Bespoke<br/>Services.</h2>
-             <button className="bg-white text-slate-950 px-16 py-8 rounded-full font-bold uppercase text-[10px] tracking-widest mb-4">Book Valuation</button>
+             <DemoLink targetId="nordic-contact" className="bg-white text-slate-950 px-16 py-8 rounded-full font-bold uppercase text-[10px] tracking-widest mb-4">Book Valuation</DemoLink>
           </div>
           <div className="grid grid-cols-3 gap-16">
              {[
@@ -868,6 +932,9 @@ const NordicSim = () => (
              ))}
           </div>
        </div>
+    </section>
+    <section id="nordic-contact" className="mx-12 mb-32 border border-slate-200 px-12 py-20 scroll-mt-24">
+      <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-end gap-10"><div className="space-y-4"><p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Private appointment</p><h2 className="text-6xl font-serif font-bold">Begin with a conversation.</h2><p className="max-w-xl text-slate-500">A complete on-page destination for the showcase; it does not send a valuation request.</p></div><DemoLink targetId="nordic-listings" className="text-xs font-black uppercase tracking-widest border-b border-slate-900 pb-2">View objects ↑</DemoLink></div>
     </section>
 
     {/* Section 5: Neighborhoods */}
@@ -901,7 +968,7 @@ const FitnessSim = () => (
   <div className="bg-black text-white font-sans selection:bg-[#ef4444] pb-40">
     <nav className="p-8 flex justify-between items-center bg-black/90 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5">
       <div className="text-4xl font-black italic tracking-tighter skew-x-[-15deg] uppercase">VANTAGE.</div>
-      <button className="bg-[#ef4444] px-12 py-4 font-black uppercase text-[11px] tracking-widest skew-x-[-10deg]">Join Tribe</button>
+      <DemoLink targetId="fitness-membership" className="bg-[#ef4444] px-12 py-4 font-black uppercase text-[11px] tracking-widest skew-x-[-10deg]">Join Tribe</DemoLink>
     </nav>
     <section className="relative h-screen flex items-center px-12 overflow-hidden">
       <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600" className="absolute inset-0 w-full h-full object-cover opacity-60 brightness-75 grayscale" />
@@ -909,12 +976,12 @@ const FitnessSim = () => (
         <h1 className="text-[18rem] font-black italic leading-[0.7] tracking-tighter uppercase animate-in slide-in-from-left-24 duration-1000">REWRITE<br/>LIMITS.</h1>
         <p className="text-4xl font-black italic uppercase max-w-4xl border-l-[15px] border-[#ef4444] pl-12">Revolutionera din biologi. Stockholms mest exklusiva träningsanläggning.</p>
         <div className="flex gap-8">
-           <button className="bg-white text-black px-16 py-8 font-black uppercase text-xs tracking-widest skew-x-[-10deg] shadow-3xl">Book Intro</button>
-           <button className="border-4 border-white px-16 py-8 font-black uppercase text-xs tracking-widest skew-x-[-10deg]">The Compound</button>
+           <DemoLink targetId="fitness-membership" className="bg-white text-black px-16 py-8 font-black uppercase text-xs tracking-widest skew-x-[-10deg] shadow-3xl">Book Intro</DemoLink>
+           <DemoLink targetId="fitness-compound" className="border-4 border-white px-16 py-8 font-black uppercase text-xs tracking-widest skew-x-[-10deg]">The Compound</DemoLink>
         </div>
       </div>
     </section>
-    <section className="py-40 grid grid-cols-4 gap-4 px-4 bg-white">
+    <section id="fitness-compound" className="py-40 grid grid-cols-4 gap-4 px-4 bg-white scroll-mt-24">
        {[
          { name: "Iron Lab", img: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=600" },
          { name: "Recovery Hub", img: "https://images.unsplash.com/photo-1517836357463-d25fed2f01d8?q=80&w=600" },
@@ -954,7 +1021,7 @@ const FitnessSim = () => (
     </section>
 
     {/* Section 4: Membership Tiers */}
-    <section className="py-40 bg-white/5 border-y border-white/10">
+    <section id="fitness-membership" className="py-40 bg-white/5 border-y border-white/10 scroll-mt-24">
        <div className="max-w-7xl mx-auto px-12">
           <div className="text-center mb-32 space-y-6">
              <h2 className="text-8xl font-black italic uppercase tracking-tighter">Choose Your Battle.</h2>
@@ -972,7 +1039,7 @@ const FitnessSim = () => (
                    <ul className="space-y-4 opacity-40 group-hover:opacity-100 transition-opacity">
                       {t.items.map(item => <li key={item} className="text-[10px] font-black uppercase tracking-widest">→ {item}</li>)}
                    </ul>
-                   <button className="w-full border-2 border-white py-6 font-black uppercase tracking-widest text-[10px] group-hover:bg-[#ef4444] group-hover:border-[#ef4444] transition-all">Select Protocol</button>
+                   <DemoLink targetId="fitness-membership" className="w-full border-2 border-white py-6 font-black uppercase tracking-widest text-[10px] group-hover:bg-[#ef4444] group-hover:border-[#ef4444] transition-all">Select Protocol</DemoLink>
                 </div>
              ))}
           </div>
@@ -1006,6 +1073,106 @@ const FitnessSim = () => (
 
 // --- MAIN PORTFOLIO COMPONENT ---
 
+const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+type DemoPageDefinition = {
+  id: string;
+  label: string;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  sections: Array<{ title: string; text: string }>;
+};
+
+type DemoSiteDefinition = {
+  palette: 'light' | 'amber' | 'midnight' | 'ink' | 'pulse' | 'garden' | 'quantum' | 'nordic' | 'fitness';
+  pages: DemoPageDefinition[];
+};
+
+const demoSiteDefinitions: Record<number, DemoSiteDefinition> = {
+  1: { palette: 'light', pages: [
+    { id: 'projects', label: 'Projects', eyebrow: 'Selected work', title: 'Spaces with a point of view.', lead: 'A complete project archive pairs visual restraint with the details clients need to take the next step.', sections: [{ title: 'The Glass House', text: 'A calm residential study where daylight, circulation and materiality work as one.' }, { title: 'Monolith Office', text: 'A workplace concept that makes scale feel human through rhythm, texture and clear wayfinding.' }, { title: 'Urban Sanctuary', text: 'A compact city residence designed around quiet transitions from public to private space.' }] },
+    { id: 'studio', label: 'Studio', eyebrow: 'The Lume studio', title: 'Architecture starts with attention.', lead: 'A studio page can explain the thinking, people and process that sit behind a portfolio.', sections: [{ title: 'Context first', text: 'Every brief begins with the site, its light and the life already moving around it.' }, { title: 'Material studies', text: 'Concrete, timber and glass are tested as lived surfaces rather than decorative finishes.' }, { title: 'Partner-led', text: 'Senior architects stay close from the earliest concept to the final detail.' }] },
+    { id: 'contact', label: 'Contact', eyebrow: 'Start a conversation', title: 'Bring the first sketch.', lead: 'A dedicated contact page keeps the next step clear without interrupting the work archive.', sections: [{ title: 'New commissions', text: 'Residential, cultural and workplace enquiries begin with an introductory conversation.' }, { title: 'Project review', text: 'Share the site, the ambition and the decisions that need a design partner.' }, { title: 'Studio visits', text: 'A considered meeting format for teams who want to explore the work in more depth.' }] },
+  ] },
+  2: { palette: 'amber', pages: [
+    { id: 'menu', label: 'Meny', eyebrow: 'Seasonal menu', title: 'A menu that follows the season.', lead: 'A full catering site needs more than a hero: it shows the courses, sourcing and dining format.', sections: [{ title: 'Nordic Sea Tasting', text: 'Hand-dived scallops, dill and crisp cucumber for a bright opening course.' }, { title: 'Field & Forest', text: 'A slow-cooked centrepiece shaped around wild herbs, mushrooms and smoke.' }, { title: 'Orchard Finale', text: 'A delicate finish of apple, honey and cultured cream.' }] },
+    { id: 'events', label: 'Event', eyebrow: 'Bespoke occasions', title: 'Events with their own rhythm.', lead: 'Event pages turn an aesthetic food brand into a useful planning destination.', sections: [{ title: 'Weddings', text: 'A personal service flow from welcome drink to the final late-night course.' }, { title: 'Corporate galas', text: 'A confident format for launches, dinners and teams with a story to tell.' }, { title: 'Private salons', text: 'A smaller, more intimate table built around a host and a seasonal menu.' }] },
+    { id: 'contact', label: 'Boka', eyebrow: 'Plan an occasion', title: 'Start with the occasion.', lead: 'A clear enquiry route makes it easy to discuss date, format and guest experience.', sections: [{ title: 'Your brief', text: 'Begin with the location, guest count and the feeling you want people to remember.' }, { title: 'Menu direction', text: 'The kitchen shapes a seasonal proposal around the event and service rhythm.' }, { title: 'Production plan', text: 'A single view of timing, suppliers and on-site coordination.' }] },
+  ] },
+  3: { palette: 'midnight', pages: [
+    { id: 'platform', label: 'Infrastructure', eyebrow: 'Infrastructure', title: 'A stack built to move.', lead: 'A product page gives technical buyers a clear view of the platform beneath the promise.', sections: [{ title: 'Global edge', text: 'Regional capacity is positioned close to the workload for responsive delivery.' }, { title: 'Autonomous scaling', text: 'Capacity expands and contracts with demand while teams retain operational visibility.' }, { title: 'Unified control', text: 'One operational layer connects clusters, observability and deployment workflows.' }] },
+    { id: 'security', label: 'Security', eyebrow: 'Security protocol', title: 'Security is part of the architecture.', lead: 'The dedicated security page makes assurance concrete before a technical evaluation starts.', sections: [{ title: 'Zero-trust posture', text: 'Each access boundary is explicit, isolated and continuously verified.' }, { title: 'Encrypted by default', text: 'Data protection is designed into the flow rather than added at the edge.' }, { title: 'Operational evidence', text: 'Clear controls and audit-ready visibility support teams that need accountability.' }] },
+    { id: 'pricing', label: 'Pricing', eyebrow: 'Access layers', title: 'Compute that fits.', lead: 'A real pricing page can explain the right level of access without creating an account.', sections: [{ title: 'Edge', text: 'A focused layer for fast prototypes and distributed product surfaces.' }, { title: 'Scale', text: 'An operational layer for live products with predictable scaling needs.' }, { title: 'Frontier', text: 'Dedicated capacity for research and teams working at the edge of the stack.' }] },
+    { id: 'docs', label: 'Docs', eyebrow: 'Developer access', title: 'The documentation is part of the product.', lead: 'A technical site earns trust when the next implementation step is visible and structured.', sections: [{ title: 'Quickstart', text: 'A direct route from environment setup to a first deployment.' }, { title: 'SDK reference', text: 'Typed primitives and practical patterns for the most common workflows.' }, { title: 'Architecture guides', text: 'Deeper material for teams designing long-lived systems.' }] },
+  ] },
+  4: { palette: 'ink', pages: [
+    { id: 'expertise', label: 'Expertise', eyebrow: 'Practice areas', title: 'Advice where the stakes are high.', lead: 'An expertise page helps a legal brand explain its depth before a confidential conversation.', sections: [{ title: 'Corporate law', text: 'Structured support for governance, transactions and long-term ownership decisions.' }, { title: 'M&A strategy', text: 'Commercial clarity through complex transaction processes.' }, { title: 'Dispute resolution', text: 'Pragmatic, prepared advocacy for matters that need a steady hand.' }] },
+    { id: 'attorneys', label: 'Attorneys', eyebrow: 'Senior leadership', title: 'People clients can rely on.', lead: 'A dedicated team page gives the human expertise the same weight as the firm’s practice areas.', sections: [{ title: 'Partner-led work', text: 'Senior judgement stays close to the matter at every key decision.' }, { title: 'Cross-border perspective', text: 'A connected network supports clients operating across jurisdictions.' }, { title: 'Long-term counsel', text: 'The relationship is built to continue after a single brief has closed.' }] },
+    { id: 'insights', label: 'Insights', eyebrow: 'Strategic briefs', title: 'Clarity before the market moves.', lead: 'Insights become a useful content destination rather than a list at the bottom of a homepage.', sections: [{ title: 'Regulation', text: 'Focused briefs on changes that materially affect modern business decisions.' }, { title: 'Transactions', text: 'Practical points of view on due diligence, structure and timing.' }, { title: 'Privacy', text: 'Guidance for organisations building trust across products and borders.' }] },
+    { id: 'contact', label: 'Consultation', eyebrow: 'Confidential consultation', title: 'A considered next step.', lead: 'A quiet, clear contact destination for a firm where discretion matters.', sections: [{ title: 'Initial context', text: 'Start with the decision, business context and the timing that matters.' }, { title: 'Right team', text: 'The enquiry is matched to the appropriate senior perspective.' }, { title: 'Next conversation', text: 'A clear path from first introduction to a structured matter review.' }] },
+  ] },
+  5: { palette: 'pulse', pages: [
+    { id: 'work', label: 'Work', eyebrow: 'Selected impact', title: 'Work that refuses the safe option.', lead: 'A project archive turns a bold agency homepage into a credible body of work.', sections: [{ title: 'Neural Canvas', text: 'An art-driven interface system that made a technical launch feel alive.' }, { title: 'Kinetic Type', text: 'A typographic identity designed to move with the brand rather than sit beside it.' }, { title: 'Glitch Protocol', text: 'A digital campaign built from motion, pressure and deliberate interruption.' }] },
+    { id: 'lab', label: 'Lab', eyebrow: 'The laboratory', title: 'Experiments become systems.', lead: 'A lab page lets the agency show how ideas become reproducible creative tools.', sections: [{ title: 'Generative systems', text: 'Reusable visual behaviours that evolve across a product or campaign.' }, { title: 'Rapid prototypes', text: 'Fast testable concepts before teams commit to a full production path.' }, { title: 'Creative technology', text: 'The bridge between expressive design and robust implementation.' }] },
+    { id: 'contact', label: 'Contact', eyebrow: 'Start loud', title: 'Bring the hard problem.', lead: 'A direct contact route for brands that need a change in direction, not another template.', sections: [{ title: 'The brief', text: 'Name the tension, the audience and the thing that cannot stay the same.' }, { title: 'The sprint', text: 'Choose a focused entry point before expanding the relationship.' }, { title: 'The outcome', text: 'Work toward a visible shift rather than a vague creative exercise.' }] },
+  ] },
+  6: { palette: 'garden', pages: [
+    { id: 'collection', label: 'Produkter', eyebrow: 'Curated collection', title: 'Objects made for slower rooms.', lead: 'A collection page gives the shop a browseable product destination beyond its homepage.', sections: [{ title: 'Organic pot', text: 'A tactile vessel with an imperfect, hand-finished surface.' }, { title: 'Hemp rug', text: 'Natural texture designed to soften a quiet interior.' }, { title: 'Hand-blown vase', text: 'A small object that catches the changing light of a room.' }] },
+    { id: 'journal', label: 'Filosofi', eyebrow: 'Botanist journal', title: 'Living with the seasons.', lead: 'Editorial content makes the brand useful between purchases and deepens its point of view.', sections: [{ title: 'Care notes', text: 'Practical guides for keeping indoor greenery resilient through the year.' }, { title: 'Material stories', text: 'The makers, fibres and finishes behind a more considered home.' }, { title: 'Workshop diary', text: 'A quieter look at what is being shaped in the studio.' }] },
+    { id: 'account', label: 'Konto', eyebrow: 'Your garden', title: 'A calm account space.', lead: 'A demonstration of the account destination without a real basket, login or checkout.', sections: [{ title: 'Saved pieces', text: 'Keep a short list of objects for a later decision.' }, { title: 'Care library', text: 'Return to practical plant and material guidance.' }, { title: 'Seasonal notes', text: 'A gentle way to surface new collections and workshop stories.' }] },
+  ] },
+  7: { palette: 'quantum', pages: [
+    { id: 'platform', label: 'Platform', eyebrow: 'Neural platform', title: 'The system beneath the model.', lead: 'A platform page gives an ambitious AI proposition an understandable technical centre.', sections: [{ title: 'Compute fabric', text: 'Distributed capacity designed for demanding multi-modal workloads.' }, { title: 'Model operations', text: 'Clear controls for teams moving from research to practical deployment.' }, { title: 'Reliability', text: 'A systems view of uptime, observability and deliberate redundancy.' }] },
+    { id: 'applications', label: 'Applications', eyebrow: 'Applied intelligence', title: 'Work where models change the decision.', lead: 'Applications show why the platform matters beyond the technical headline.', sections: [{ title: 'Synthetic biology', text: 'More capable simulation paths for complex biological questions.' }, { title: 'Climate systems', text: 'A clearer way to explore the interactions behind global scenarios.' }, { title: 'Financial core', text: 'High-volume pattern analysis for time-sensitive decisions.' }] },
+    { id: 'research', label: 'Research', eyebrow: 'Research mission', title: 'Make the impossible more testable.', lead: 'A research page balances ambition with the method and focus that make it credible.', sections: [{ title: 'Open questions', text: 'Problems chosen for their potential to shift an entire field.' }, { title: 'Model safety', text: 'Practical review points for teams building powerful systems responsibly.' }, { title: 'Collaborative work', text: 'A shared research path with institutions and domain specialists.' }] },
+    { id: 'docs', label: 'API docs', eyebrow: 'Developer access', title: 'A direct path to the protocol.', lead: 'The API page demonstrates a useful documentation and access destination without issuing credentials.', sections: [{ title: 'Quickstart', text: 'A focused route from a local environment to a first protected request.' }, { title: 'Reference', text: 'Structured endpoints, model capabilities and operational constraints.' }, { title: 'Guides', text: 'Longer technical material for architecture, evaluation and deployment.' }] },
+  ] },
+  8: { palette: 'nordic', pages: [
+    { id: 'listings', label: 'Objekt', eyebrow: 'Current curations', title: 'Homes with a lasting point of view.', lead: 'A listings page makes the real-estate demonstration feel like a real property platform.', sections: [{ title: 'The Glass Pavilion', text: 'A light-filled home where architecture, water and landscape meet.' }, { title: 'Monolith Residence', text: 'A deliberate sequence of private rooms and expansive views.' }, { title: 'Coastal retreat', text: 'A calm residence defined by proportion, natural materials and horizon lines.' }] },
+    { id: 'valuation', label: 'Värdering', eyebrow: 'Private valuation', title: 'Value is more than a number.', lead: 'A valuation page gives the agency a clear service destination beyond property listings.', sections: [{ title: 'Market context', text: 'A view of the property within its local, national and buyer-specific context.' }, { title: 'Presentation strategy', text: 'A focused plan for preparing the home, story and timing.' }, { title: 'Private process', text: 'A structured route for owners who value discretion and control.' }] },
+    { id: 'contact', label: 'Kontakt', eyebrow: 'Private appointment', title: 'Begin with a conversation.', lead: 'A polished contact destination for a relationship-led property brand.', sections: [{ title: 'Buy', text: 'Share the qualities and locations that define the right next home.' }, { title: 'Sell', text: 'Start with the property, timing and level of discretion required.' }, { title: 'Advise', text: 'An ongoing relationship for owners making longer-term decisions.' }] },
+  ] },
+  9: { palette: 'fitness', pages: [
+    { id: 'compound', label: 'Compound', eyebrow: 'Training spaces', title: 'Every room has a purpose.', lead: 'A compound page turns a gym’s energy into a practical view of the facilities and methods.', sections: [{ title: 'Iron lab', text: 'Focused strength work with coaching, progression and equipment that earns its place.' }, { title: 'Recovery hub', text: 'Recovery systems designed to make demanding training sustainable.' }, { title: 'Velocity zone', text: 'A place for speed, conditioning and measurable athletic output.' }] },
+    { id: 'protocol', label: 'Protocols', eyebrow: 'Performance system', title: 'Training that adapts.', lead: 'A protocol page explains what members actually follow once they join.', sections: [{ title: 'Assess', text: 'Start with movement, capacity and the constraints of real life.' }, { title: 'Build', text: 'Use progressive work that matches the goal, not a generic calendar.' }, { title: 'Review', text: 'Measure the signals that matter and adjust with a coach.' }] },
+    { id: 'membership', label: 'Membership', eyebrow: 'Membership tiers', title: 'Choose a level of commitment.', lead: 'A membership page gives the offer its own considered home before any purchase flow.', sections: [{ title: 'Vantage base', text: 'A disciplined starting point for members who want structure and access.' }, { title: 'Vantage core', text: 'More coaching, recovery and accountability through the week.' }, { title: 'Vantage prime', text: 'A high-touch performance relationship with a tailored plan.' }] },
+    { id: 'contact', label: 'Coaches', eyebrow: 'Meet the team', title: 'Bring your real starting point.', lead: 'A coaching page makes the human expertise visible before a first introduction.', sections: [{ title: 'Performance lead', text: 'A coach who turns a broad ambition into an accountable training path.' }, { title: 'Specialists', text: 'Support across strength, recovery and sustainable performance.' }, { title: 'First session', text: 'A clear introduction designed around your starting point and goals.' }] },
+  ] },
+};
+
+const paletteClasses: Record<DemoSiteDefinition['palette'], { shell: string; muted: string; accent: string; card: string }> = {
+  light: { shell: 'bg-white text-slate-950', muted: 'text-slate-500', accent: 'text-slate-950', card: 'border-slate-200 bg-slate-50' },
+  amber: { shell: 'bg-[#fffdfa] text-amber-950', muted: 'text-amber-900/60', accent: 'text-amber-700', card: 'border-amber-200 bg-amber-50' },
+  midnight: { shell: 'bg-[#020617] text-white', muted: 'text-slate-400', accent: 'text-blue-400', card: 'border-white/10 bg-white/[0.03]' },
+  ink: { shell: 'bg-slate-50 text-[#0f172a]', muted: 'text-slate-500', accent: 'text-[#0f172a]', card: 'border-slate-200 bg-white' },
+  pulse: { shell: 'bg-[#ff3e00] text-white', muted: 'text-white/70', accent: 'text-black', card: 'border-black bg-white text-black' },
+  garden: { shell: 'bg-[#fcfdfa] text-[#16423c]', muted: 'text-[#16423c]/60', accent: 'text-[#6a9c89]', card: 'border-[#16423c]/15 bg-white' },
+  quantum: { shell: 'bg-[#050505] text-white', muted: 'text-slate-400', accent: 'text-purple-400', card: 'border-purple-400/20 bg-purple-500/10' },
+  nordic: { shell: 'bg-white text-slate-900', muted: 'text-slate-500', accent: 'text-slate-900', card: 'border-slate-200 bg-slate-50' },
+  fitness: { shell: 'bg-black text-white', muted: 'text-slate-400', accent: 'text-[#ef4444]', card: 'border-white/10 bg-white/[0.04]' },
+};
+
+const DemoSubpage: React.FC<{ item: typeof portfolioItems[0]; page: DemoPageDefinition; definition: DemoSiteDefinition; onNavigate: (pageId: string) => void }> = ({ item, page, definition, onNavigate }) => {
+  const theme = paletteClasses[definition.palette];
+  return (
+    <article className={`${theme.shell} min-h-[calc(100vh-4rem)] pb-24 md:min-h-[calc(100vh-5rem)]`}>
+      <section className="relative overflow-hidden border-b border-current/10 px-6 py-24 md:px-12 md:py-32">
+        <div className="absolute inset-0 opacity-15"><img src={item.image} alt="" className="h-full w-full object-cover" /></div>
+        <div className="relative mx-auto max-w-7xl space-y-8">
+          <p className={`text-[10px] font-black uppercase tracking-[0.45em] ${theme.accent}`}>{page.eyebrow}</p>
+          <h1 className="max-w-5xl text-6xl font-black tracking-tighter md:text-8xl lg:text-9xl">{page.title}</h1>
+          <p className={`max-w-2xl text-lg leading-relaxed md:text-2xl ${theme.muted}`}>{page.lead}</p>
+        </div>
+      </section>
+      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-20 md:grid-cols-3 md:px-12">
+        {page.sections.map((section, index) => <article key={section.title} className={`border p-8 md:p-10 ${theme.card}`}><p className={`text-[10px] font-black tracking-[0.35em] ${theme.accent}`}>0{index + 1}</p><h2 className="mt-8 text-3xl font-bold tracking-tight">{section.title}</h2><p className={`mt-5 leading-relaxed ${theme.muted}`}>{section.text}</p></article>)}
+      </section>
+      <section className="mx-auto max-w-7xl px-6 pb-16 md:px-12"><div className={`border p-8 md:flex md:items-end md:justify-between md:p-12 ${theme.card}`}><div><p className={`text-[10px] font-black uppercase tracking-[0.4em] ${theme.accent}`}>Explore the full site</p><p className={`mt-4 max-w-2xl text-lg ${theme.muted}`}>Navigate between dedicated demo pages; this is a static preview and does not create accounts, bookings, payments or messages.</p></div><button type="button" onClick={() => onNavigate('home')} className="mt-7 border border-current px-6 py-3 text-xs font-black uppercase tracking-widest md:mt-0">Till startsidan</button></div></section>
+    </article>
+  );
+};
+
 const SimulatedSite: React.FC<{ item: typeof portfolioItems[0] }> = ({ item }) => {
   switch (item.id) {
     case 1: return <LumeSim />;
@@ -1021,12 +1188,87 @@ const SimulatedSite: React.FC<{ item: typeof portfolioItems[0] }> = ({ item }) =
   }
 };
 
-export const Portfolio: React.FC = () => {
-  const [selectedItem, setSelectedItem] = useState<typeof portfolioItems[0] | null>(null);
+export const Portfolio: React.FC<{ initialDemo?: string; initialPage?: string; initialOrigin?: 'index' | 'referenser'; initialReturnY?: number }> = ({ initialDemo, initialPage, initialOrigin = 'referenser', initialReturnY }) => {
+  const initialItem = initialDemo
+    ? portfolioItems.find((item) => slugify(item.title) === initialDemo) ?? null
+    : null;
+  const [selectedItem, setSelectedItem] = useState<typeof portfolioItems[0] | null>(initialItem);
+  const [activePage, setActivePage] = useState(initialPage || 'home');
+
+  const pageDefinition = selectedItem ? demoSiteDefinitions[selectedItem.id] : undefined;
+  const selectedPage = pageDefinition?.pages.find((page) => page.id === activePage);
 
   useEffect(() => {
     if (selectedItem) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'unset';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedItem]);
+
+  const closeDemo = () => {
+    document.body.style.overflow = 'unset';
+    // The GitHub bundle is a demo viewer only. Never expose its former
+    // Webbtjänst portfolio grid when the visitor exits a reference demo.
+    const returnUrl = new URL(initialOrigin === 'index' ? '../index.html' : '../referenser.html', window.location.href);
+    if (typeof initialReturnY === 'number') returnUrl.searchParams.set('returnY', String(initialReturnY));
+    window.location.replace(returnUrl.toString());
+  };
+
+  const returnLabel = initialOrigin === 'index' ? 'Tillbaka till startsidan' : 'Tillbaka till referenser';
+
+  const openDemo = (item: typeof portfolioItems[0]) => {
+    setSelectedItem(item);
+    setActivePage('home');
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'portfolio');
+    url.searchParams.set('demo', slugify(item.title));
+    url.searchParams.delete('page');
+    window.history.pushState({}, '', `${url.pathname}?${url.searchParams.toString()}${url.hash}`);
+  };
+
+  const navigateToPage = (pageId: string) => {
+    if (!selectedItem) return;
+    setActivePage(pageId);
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'portfolio');
+    url.searchParams.set('demo', slugify(selectedItem.title));
+    if (pageId === 'home') url.searchParams.delete('page');
+    else url.searchParams.set('page', pageId);
+    window.history.pushState({}, '', `${url.pathname}?${url.searchParams.toString()}${url.hash}`);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.querySelector<HTMLElement>('[role="dialog"]')?.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  };
+
+  useEffect(() => {
+    if (!selectedItem) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeDemo();
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [selectedItem]);
+
+  useEffect(() => {
+    const updateFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const nextItem = portfolioItems.find((item) => slugify(item.title) === params.get('demo')) ?? null;
+      setSelectedItem(nextItem);
+      setActivePage(params.get('page') || 'home');
+    };
+    window.addEventListener('popstate', updateFromUrl);
+    return () => window.removeEventListener('popstate', updateFromUrl);
+  }, []);
+
+  useEffect(() => {
+    const handleDemoPageRequest = (event: Event) => {
+      const page = (event as CustomEvent<{ page?: string }>).detail?.page;
+      if (page) navigateToPage(page);
+    };
+    window.addEventListener('demo-page-request', handleDemoPageRequest);
+    return () => window.removeEventListener('demo-page-request', handleDemoPageRequest);
   }, [selectedItem]);
 
   return (
@@ -1050,7 +1292,7 @@ export const Portfolio: React.FC = () => {
             <div 
               key={item.id} 
               className="group relative cursor-pointer"
-              onClick={() => setSelectedItem(item)}
+              onClick={() => openDemo(item)}
             >
               <div className="relative aspect-[16/11] overflow-hidden rounded-[3rem] bg-slate-100 shadow-sm transition-all duration-700 group-hover:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.2)] group-hover:-translate-y-6">
                 <img 
@@ -1080,48 +1322,30 @@ export const Portfolio: React.FC = () => {
       </div>
 
       {selectedItem && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-12 overflow-hidden animate-in fade-in duration-500">
-          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl" onClick={() => setSelectedItem(null)}></div>
-          
-          <div className="relative bg-white w-full h-full max-w-[1700px] rounded-none md:rounded-[4rem] overflow-y-auto scrollbar-hide shadow-4xl animate-in zoom-in-95 slide-in-from-bottom-32 duration-1000">
-            
-            <div className="flex items-center justify-between px-12 py-8 border-b border-slate-100 bg-white sticky top-0 z-[110]">
-              <div className="flex items-center space-x-10">
-                <div>
-                  <h3 className="text-2xl font-black tracking-tighter uppercase">{selectedItem.title}</h3>
-                  <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{selectedItem.category}</p>
-                </div>
-                <div className="hidden lg:flex items-center space-x-12 border-l border-slate-100 pl-12">
-                   {[ ["Laddning", selectedItem.stats.speed], ["SEO", selectedItem.stats.seo+"/100"], ["Konvertering", selectedItem.stats.conversion] ].map(([label, val]) => (
-                     <div key={label} className="text-center">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-                        <p className="text-sm font-black text-slate-900">{val}</p>
-                     </div>
-                   ))}
-                </div>
-              </div>
-              <button onClick={() => setSelectedItem(null)} className="w-14 h-14 bg-slate-100 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center transition-all duration-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-              </button>
+        <div className="demo-viewer fixed inset-0 z-[100] overflow-x-hidden overflow-y-auto bg-white animate-in fade-in duration-300" role="dialog" aria-modal="true" aria-label={`${selectedItem.title} interaktiv demo`}>
+          <header className="sticky top-0 z-[110] border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
+            <div className="flex h-16 min-w-0 items-center justify-between gap-2 px-3 md:h-20 md:px-8">
+            <button onClick={closeDemo} className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-100 md:px-4" aria-label={returnLabel}>
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 18l-6-6 6-6"></path></svg>
+              <span className="sm:hidden">Tillbaka</span>
+              <span className="hidden sm:inline">{returnLabel}</span>
+            </button>
+            <nav className="hidden max-w-[58%] items-center justify-center gap-3 overflow-x-auto text-[10px] font-black uppercase tracking-[0.18em] text-slate-500 lg:flex" aria-label={`${selectedItem.title} sidmeny`}>
+              <button type="button" onClick={() => navigateToPage('home')} className={activePage === 'home' ? 'text-slate-900' : 'hover:text-slate-900'}>Start</button>
+              {pageDefinition?.pages.map((page) => <button key={page.id} type="button" onClick={() => navigateToPage(page.id)} className={activePage === page.id ? 'text-slate-900' : 'hover:text-slate-900'}>{page.label}</button>)}
+            </nav>
+            <p className="min-w-0 flex-1 truncate text-center text-[9px] font-black uppercase tracking-[0.16em] text-slate-400 sm:text-[10px] sm:tracking-[0.22em] lg:hidden">{selectedItem.title} · demo</p>
+            <button onClick={closeDemo} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-colors hover:bg-slate-900 hover:text-white md:h-12 md:w-12" aria-label="Stäng demo" title="Stäng demo (Esc)">
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
             </div>
-            
-            <div className="bg-white">
-              <div className="max-w-full mx-auto">
-                <div className="bg-slate-100 px-10 py-5 flex items-center space-x-6 border-b border-slate-200">
-                  <div className="flex space-x-2">
-                    <div className="w-3.5 h-3.5 rounded-full bg-red-400 shadow-inner"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-yellow-400 shadow-inner"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-green-400 shadow-inner"></div>
-                  </div>
-                  <div className="flex-grow bg-white rounded-xl py-2 px-6 text-[11px] text-slate-400 font-bold overflow-hidden whitespace-nowrap border border-slate-200/50 italic">
-                    https://demo.webfabriken.se/{selectedItem.title.toLowerCase().replace(/\s+/g, '-')}
-                  </div>
-                </div>
-                <div className="relative">
-                   <SimulatedSite item={selectedItem} />
-                </div>
-              </div>
-            </div>
+            <nav className="demo-mobile-nav flex gap-2 overflow-x-auto px-3 pb-2 lg:hidden" aria-label={`${selectedItem.title} sidmeny mobil`}>
+              <button type="button" onClick={() => navigateToPage('home')} className={activePage === 'home' ? 'is-active' : ''}>Start</button>
+              {pageDefinition?.pages.map((page) => <button key={page.id} type="button" onClick={() => navigateToPage(page.id)} className={activePage === page.id ? 'is-active' : ''}>{page.label}</button>)}
+            </nav>
+          </header>
+          <div className="demo-stage min-h-[calc(100vh-6.75rem)] overflow-x-hidden bg-white md:min-h-[calc(100vh-5rem)]">
+            {selectedPage && pageDefinition ? <DemoSubpage item={selectedItem} page={selectedPage} definition={pageDefinition} onNavigate={navigateToPage} /> : <SimulatedSite item={selectedItem} />}
           </div>
         </div>
       )}

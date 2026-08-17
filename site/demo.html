@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo | Webbtjänst</title>
+<meta name="description" content="Visar den riktiga interaktiva demo-visningen från Websit-SAAS.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <p>Öppnar den interaktiva demo-visningen …</p>
+  <script>
+    (function () {
+      var allowed = [
+        'lume-architecture', 'savor-catering', 'nova-tech-saas',
+        'vantage-legal', 'studio-pulse', 'ecogarden-shop', 'quantum-ai',
+        'nordic-home', 'vantage-fitness'
+      ];
+      var site = new URLSearchParams(window.location.search).get('site') || 'lume-architecture';
+      if (allowed.indexOf(site) === -1) site = 'lume-architecture';
+      window.location.replace('github-demos/index.html?view=portfolio&demo=' + encodeURIComponent(site) + '&v=20260816-fullscreen');
+    }());
+  </script>
+</body>
+</html>

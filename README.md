@@ -1,20 +1,11 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Webbtjanst.com
 
-# Run and deploy your AI Studio app
+Production repository for Webbtjanst.com.
 
-This contains everything you need to run your app locally.
+- `site/`: static site published by GitHub Pages.
+- `checkout-backend/`: Convex backend for Stripe Checkout, verified webhooks, orders, leads and delivery outbox jobs.
+- Root Vite app: interactive reference demos used by the production site.
 
-View your app in AI Studio: https://ai.studio/apps/drive/18IkXCyKbpLvb_7wXxmPiEGc4ducSjZKP
+The GitHub Actions workflow verifies the static artifact and backend, deploys Convex with the repository secret `CONVEX_DEPLOY_KEY`, and publishes `site/` only after both verification jobs pass.
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+See `AGENTS.md` for operational and secret-handling rules.
