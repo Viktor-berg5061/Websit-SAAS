@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
 <title>Tjänster – Hemsidor, Lokal SEO & AI-receptionist | Webbtjänst</title>
 <meta name="description" content="Hemsidor, lokal SEO och AI-receptionist för lokala serviceföretag i hela Sverige. Live på 24–48 timmar. Få din offert och börja synas redan idag.">
 <link rel="canonical" href="https://www.webbtjanst.com/tjanster">
@@ -60,11 +70,11 @@
       <span class="brand-name">WEBBTJÄNST</span>
     </a>
     <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="tjanster.html" class="active" aria-current="page">Tjänster</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+      <a href="tjanster" class="active" aria-current="page">Tjänster</a>
+      <a href="referenser">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="starta-projekt" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
       <span></span><span></span><span></span>
@@ -76,13 +86,13 @@
     <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
     <nav aria-label="Mobilmeny">
       <a href="/">Start</a>
-      <a href="tjanster.html" class="active" aria-current="page">Tjänster</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="om-oss.html">Om oss</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--block">Starta Projekt</a>
+      <a href="tjanster" class="active" aria-current="page">Tjänster</a>
+      <a href="referenser">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="om-oss">Om oss</a>
+      <a href="kontakt">Kontakt</a>
+      <a href="starta-projekt" class="btn btn--primary btn--block">Starta Projekt</a>
     </nav>
     <div class="nav-drawer__contact">
       <a href="tel:+46704949087">+46 70 494 90 87</a>
@@ -116,25 +126,25 @@
           <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span>
           <h3>Hemsidor</h3>
           <p>Din verksamhet live på 24–48 timmar.</p>
-          <a class="card-link" href="tjanster/hemsidor.html">Läs mer</a>
+          <a class="card-link" href="tjanster/hemsidor">Läs mer</a>
         </article>
         <article class="service-card">
           <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
           <h3>Lokal SEO</h3>
           <p>Syns när kunder söker i din stad.</p>
-          <a class="card-link" href="tjanster/lokal-seo.html">Läs mer</a>
+          <a class="card-link" href="tjanster/lokal-seo">Läs mer</a>
         </article>
         <article class="service-card">
           <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 8.9 8.9 0 0 1-3.7-.8L3 21l1.9-5.3a8.4 8.4 0 1 1 16.1-4.2z"/></svg></span>
           <h3>AI-receptionist</h3>
           <p>Svarar kunder dygnet runt.</p>
-          <a class="card-link" href="tjanster/ai-receptionist.html">Läs mer</a>
+          <a class="card-link" href="tjanster/ai-receptionist">Läs mer</a>
         </article>
         <article class="service-card">
           <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0 6 6L13 20a2.1 2.1 0 0 1-3-3l7.7-7.7z"/><path d="M14.7 6.3 12 3.6a4.5 4.5 0 0 0-6.4 6.4L8 12.4"/></svg></span>
           <h3>Underhåll</h3>
           <p>Sajten växer och rankar högre varje månad.</p>
-          <a class="card-link" href="tjanster/underhall.html">Läs mer</a>
+          <a class="card-link" href="tjanster/underhall">Läs mer</a>
         </article>
       </div>
     </div>
@@ -226,8 +236,8 @@
           <p>Fyll i formuläret och få en offert inom 24 timmar. Din nya sajt kan vara live redan i övermorgon.</p>
         </div>
         <div class="cta-band__actions">
-          <a class="btn btn--primary" href="starta-projekt.html">Starta ditt projekt</a>
-          <a class="btn btn--outline" href="priser.html">Se priser</a>
+          <a class="btn btn--primary" href="starta-projekt">Starta ditt projekt</a>
+          <a class="btn btn--outline" href="priser">Se priser</a>
         </div>
       </div>
     </div>
@@ -246,18 +256,18 @@
     </div>
     <div class="footer-col">
       <h4>Länkar</h4>
-      <a href="tjanster.html">Tjänster</a>
-      <a href="process.html">Processen</a>
-      <a href="priser.html">Priser</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="starta-projekt.html">Starta projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="process">Processen</a>
+      <a href="priser">Priser</a>
+      <a href="referenser">Referenser</a>
+      <a href="starta-projekt">Starta projekt</a>
     </div>
     <div class="footer-col">
       <h4>Tjänster</h4>
-      <a href="tjanster/hemsidor.html">Hemsidor</a>
-      <a href="tjanster/lokal-seo.html">Lokal SEO</a>
-      <a href="tjanster/ai-receptionist.html">AI-receptionist</a>
-      <a href="tjanster/underhall.html">Underhåll</a>
+      <a href="tjanster/hemsidor">Hemsidor</a>
+      <a href="tjanster/lokal-seo">Lokal SEO</a>
+      <a href="tjanster/ai-receptionist">AI-receptionist</a>
+      <a href="tjanster/underhall">Underhåll</a>
     </div>
     <div class="footer-col footer-nap">
       <h4>Kontakt</h4>
@@ -271,8 +281,8 @@
     <div class="container footer-bottom-inner">
       <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
       <div class="footer-legal">
-        <a href="integritetspolicy.html">Integritetspolicy</a>
-        <a href="villkor.html">Allmänna villkor</a>
+        <a href="integritetspolicy">Integritetspolicy</a>
+        <a href="villkor">Allmänna villkor</a>
       </div>
     </div>
   </div>

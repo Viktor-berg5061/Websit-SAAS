@@ -3,6 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
   <meta name="robots" content="noindex,nofollow">
   <title>Checkout avbruten | Webbtjänst</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -15,7 +25,7 @@
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Webbtjänst – startsida"><span class="brand-mark" aria-hidden="true"></span><span>WEBBTJÄNST</span></a>
-      <a class="btn btn--dark" href="starta-projekt.html">Tillbaka till valen</a>
+      <a class="btn btn--dark" href="starta-projekt">Tillbaka till valen</a>
     </div>
   </header>
   <main>
@@ -24,7 +34,7 @@
         <p class="eyebrow">CHECKOUT AVBRUTEN</p>
         <h1>Ingen betalning <em>genomfördes</em></h1>
         <p class="lead">Du kan gå tillbaka och kontrollera eller ändra dina val innan du försöker igen.</p>
-        <a class="btn btn--dark" href="starta-projekt.html" style="margin-top:1.5rem">Tillbaka till paketvalen</a>
+        <a class="btn btn--dark" href="starta-projekt" style="margin-top:1.5rem">Tillbaka till paketvalen</a>
       </div>
     </section>
   </main>

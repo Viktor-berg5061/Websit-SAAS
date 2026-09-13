@@ -15,10 +15,15 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script>
-  if (window.location.pathname === "/index.html") {
-    window.history.replaceState(null, "", "/" + window.location.search + window.location.hash);
-  }
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,11 +63,11 @@
       <span class="brand-name">WEBBTJÄNST</span>
     </a>
     <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="tjanster.html">Tjänster</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="referenser">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="starta-projekt" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
       <span></span><span></span><span></span>
@@ -74,13 +79,13 @@
     <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
     <nav aria-label="Mobilmeny">
       <a href="/">Start</a>
-      <a href="tjanster.html">Tjänster</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="om-oss.html">Om oss</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--block">Starta Projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="referenser">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="om-oss">Om oss</a>
+      <a href="kontakt">Kontakt</a>
+      <a href="starta-projekt" class="btn btn--primary btn--block">Starta Projekt</a>
     </nav>
     <div class="nav-drawer__contact">
       <a href="tel:+46704949087">+46 70 494 90 87</a>
@@ -99,8 +104,8 @@
         <h1>Vi bygger din hemsida innan du hinner <em class="accent">blinka</em>.</h1>
         <p class="hero-sub">Professionella, konverterande hemsidor för lokala serviceföretag. Din nya sajt är live på 24–48 timmar.</p>
         <div class="hero-actions">
-          <a href="priser.html" class="btn btn--primary">Se våra paket</a>
-          <a href="process.html" class="btn btn--outline">Hur fungerar det?</a>
+          <a href="priser" class="btn btn--primary">Se våra paket</a>
+          <a href="process" class="btn btn--outline">Hur fungerar det?</a>
         </div>
         <div class="hero-tools">
           <strong>ANVÄNDER:</strong>
@@ -199,7 +204,7 @@
             <li>Formulär, karta och kontaktuppgifter</li>
             <li>Publicerad på din egen domän</li>
           </ul>
-          <a href="starta-projekt.html" class="btn btn--primary">Välj Start</a>
+          <a href="starta-projekt" class="btn btn--primary">Välj Start</a>
         </article>
         <article class="price-card price-card--featured">
 <span class="price-card__time">Leverans 24–48 timmar</span>
@@ -214,7 +219,7 @@
             <li>Analysverktyg kopplade från dag 1</li>
             <li>Prioriterad support efter lansering</li>
           </ul>
-          <a href="starta-projekt.html" class="btn btn--primary">Välj Tillväxt</a>
+          <a href="starta-projekt" class="btn btn--primary">Välj Tillväxt</a>
         </article>
         <article class="price-card">
           <span class="price-card__time">Leverans 24–48 timmar</span>
@@ -229,7 +234,7 @@
             <li>Konverteringsoptimering inkluderad</li>
             <li>Dedikerad kontakt i 3 månader</li>
           </ul>
-          <a href="starta-projekt.html" class="btn btn--primary">Välj Premium</a>
+          <a href="starta-projekt" class="btn btn--primary">Välj Premium</a>
         </article>
       </div>
     </div>
@@ -243,7 +248,7 @@
         <h2 class="section-title">Det här hinner vi bygga på <em class="accent">två dagar</em></h2>
       </div>
       <div class="grid grid--3">
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=lume-architecture&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Lume Architecture">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=lume-architecture&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Lume Architecture">
           <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=900&h=700&auto=format&fit=crop" alt="Lume Architecture – vit arkitekturbyggnad" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">Design &amp; Arkitektur</span>
@@ -253,7 +258,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=savor-catering&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Savor Catering">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=savor-catering&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Savor Catering">
           <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=900&h=700&auto=format&fit=crop" alt="Savor Catering – uppdukat restaurangbord" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">Mat &amp; Restaurang</span>
@@ -263,7 +268,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=nova-tech-saas&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nova Tech SaaS">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=nova-tech-saas&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nova Tech SaaS">
           <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&h=700&auto=format&fit=crop" alt="Nova Tech SaaS – analysdashboard på skärm" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">Teknik &amp; Mjukvara</span>
@@ -273,7 +278,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=vantage-legal&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Legal">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=vantage-legal&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Legal">
           <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=900&h=700&auto=format&fit=crop" alt="Vantage Legal – modern kontorsfasad" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">Juridik &amp; Finans</span>
@@ -283,7 +288,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=studio-pulse&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Studio Pulse">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=studio-pulse&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Studio Pulse">
           <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=900&h=700&auto=format&fit=crop" alt="Studio Pulse – kreativ färgpalett på arbetsbord" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">Kreativ Byrå</span>
@@ -293,7 +298,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=ecogarden-shop&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: EcoGarden Shop">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=ecogarden-shop&amp;from=index&amp;v=20260816-fullscreen" aria-label="Öppna full demo: EcoGarden Shop">
           <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=900&h=700&auto=format&fit=crop" alt="EcoGarden Shop – gröna växter i krukor" width="900" height="700">
           <div class="ref-card__body">
             <span class="ref-card__cat">E-handel</span>
@@ -305,7 +310,7 @@
         </a>
       </div>
       <div style="text-align:center; margin-top:2.6rem;">
-        <a href="referenser.html" class="btn btn--primary">Se alla referenser</a>
+        <a href="referenser" class="btn btn--primary">Se alla referenser</a>
       </div>
     </div>
   </section>
@@ -319,8 +324,8 @@
           <p>Din nya hemsida kan vara live på 24–48 timmar. Fyll i formuläret och vi tar det därifrån.</p>
         </div>
         <div class="cta-band__actions">
-          <a href="starta-projekt.html" class="btn btn--primary">Starta ditt projekt</a>
-          <a href="priser.html" class="btn btn--outline">Se priser</a>
+          <a href="starta-projekt" class="btn btn--primary">Starta ditt projekt</a>
+          <a href="priser" class="btn btn--outline">Se priser</a>
         </div>
       </div>
     </div>
@@ -339,18 +344,18 @@
     </div>
     <div class="footer-col">
       <h4>Länkar</h4>
-      <a href="tjanster.html">Tjänster</a>
-      <a href="process.html">Processen</a>
-      <a href="priser.html">Priser</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="starta-projekt.html">Starta projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="process">Processen</a>
+      <a href="priser">Priser</a>
+      <a href="referenser">Referenser</a>
+      <a href="starta-projekt">Starta projekt</a>
     </div>
     <div class="footer-col">
       <h4>Tjänster</h4>
-      <a href="tjanster/hemsidor.html">Hemsidor</a>
-      <a href="tjanster/lokal-seo.html">Lokal SEO</a>
-      <a href="tjanster/ai-receptionist.html">AI-receptionist</a>
-      <a href="tjanster/underhall.html">Underhåll</a>
+      <a href="tjanster/hemsidor">Hemsidor</a>
+      <a href="tjanster/lokal-seo">Lokal SEO</a>
+      <a href="tjanster/ai-receptionist">AI-receptionist</a>
+      <a href="tjanster/underhall">Underhåll</a>
     </div>
     <div class="footer-col footer-nap">
       <h4>Kontakt</h4>
@@ -364,8 +369,8 @@
     <div class="container footer-bottom-inner">
       <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
       <div class="footer-legal">
-        <a href="integritetspolicy.html">Integritetspolicy</a>
-        <a href="villkor.html">Allmänna villkor</a>
+        <a href="integritetspolicy">Integritetspolicy</a>
+        <a href="villkor">Allmänna villkor</a>
       </div>
     </div>
   </div>

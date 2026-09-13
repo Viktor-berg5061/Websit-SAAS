@@ -53,17 +53,17 @@ const LEAD_SITE_KEY = "webbtjanst";
 
   /* ---------- Boka möte i alla navigeringar ---------- */
   document.querySelectorAll(".site-nav").forEach(function (nav) {
-    if (nav.querySelector('a[href="boka-mote.html"]')) return;
+    if (nav.querySelector('a[href$="boka-mote"]')) return;
     var link = document.createElement("a");
-    link.href = "boka-mote.html";
+    link.href = "/boka-mote";
     link.textContent = "Boka möte";
     var cta = nav.querySelector(".nav-cta");
     nav.insertBefore(link, cta || null);
   });
   document.querySelectorAll(".nav-drawer nav").forEach(function (nav) {
-    if (nav.querySelector('a[href="boka-mote.html"]')) return;
+    if (nav.querySelector('a[href$="boka-mote"]')) return;
     var link = document.createElement("a");
-    link.href = "boka-mote.html";
+    link.href = "/boka-mote";
     link.textContent = "Boka möte";
     var cta = nav.querySelector(".btn");
     nav.insertBefore(link, cta || null);

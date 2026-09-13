@@ -14,6 +14,15 @@ serviceföretag på 24–48 timmar. Målgrupp: små och medelstora lokala föret
 - Adress (fiktiv): Digitalvägen 1, 111 57 Stockholm. Öppettider: Mån–Fre 08:00–18:00
 - Domän för canonical: https://www.webbtjanst.com/
 
+## Publika webbadresser
+
+- Alla länkar, canonical-taggar, Open Graph-adresser och sitemap-poster använder
+  rena sökvägar utan `.html`, till exempel `/boka-mote` och `/tjanster/hemsidor`.
+- De fysiska produktionsfilerna får fortfarande heta `.html`; GitHub Pages
+  serverar dem även via den rena adressen.
+- Varje HTML-sida ska ha det tidiga `data-clean-public-url`-skriptet från
+  head-mallen. Det städar gamla bokmärken med `.html` utan omladdning.
+
 ## Designsystem (finns i assets/css/style.css)
 
 Tokens i `:root` (använd klasserna, sätt aldrig egna hex-värden):
@@ -67,16 +76,16 @@ Diagram (skalbarhet): `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
 ```html
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="INDEX.html" aria-label="Webbtjänst – startsida">
+    <a class="brand" href="/" aria-label="Webbtjänst – startsida">
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-name">WEBBTJÄNST</span>
     </a>
     <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="TJANSTER.html" CLASS_ACTIVE>Tjänster</a>
-      <a href="REFERENSER.html" CLASS_ACTIVE>Referenser</a>
-      <a href="PROCESS.html" CLASS_ACTIVE>Process</a>
-      <a href="PRISER.html" CLASS_ACTIVE>Priser</a>
-      <a href="STARTAPROJEKT.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+      <a href="TJANSTER" CLASS_ACTIVE>Tjänster</a>
+      <a href="REFERENSER" CLASS_ACTIVE>Referenser</a>
+      <a href="PROCESS" CLASS_ACTIVE>Process</a>
+      <a href="PRISER" CLASS_ACTIVE>Priser</a>
+      <a href="STARTAPROJEKT" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
       <span></span><span></span><span></span>
@@ -87,14 +96,14 @@ Diagram (skalbarhet): `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
   <div class="nav-drawer__panel">
     <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
     <nav aria-label="Mobilmeny">
-      <a href="INDEX.html">Start</a>
-      <a href="TJANSTER.html">Tjänster</a>
-      <a href="REFERENSER.html">Referenser</a>
-      <a href="PROCESS.html">Process</a>
-      <a href="PRISER.html">Priser</a>
-      <a href="OMOSS.html">Om oss</a>
-      <a href="KONTAKT.html">Kontakt</a>
-      <a href="STARTAPROJEKT.html" class="btn btn--primary btn--block">Starta Projekt</a>
+      <a href="/">Start</a>
+      <a href="TJANSTER">Tjänster</a>
+      <a href="REFERENSER">Referenser</a>
+      <a href="PROCESS">Process</a>
+      <a href="PRISER">Priser</a>
+      <a href="OMOSS">Om oss</a>
+      <a href="KONTAKT">Kontakt</a>
+      <a href="STARTAPROJEKT" class="btn btn--primary btn--block">Starta Projekt</a>
     </nav>
     <div class="nav-drawer__contact">
       <a href="tel:+46704949087">+46 70 494 90 87</a>
@@ -116,7 +125,7 @@ Undersidor i /tjanster/: prefix `../` på ALLA länkar.
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a class="brand brand--light" href="INDEX.html">
+      <a class="brand brand--light" href="/">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">WEBBTJÄNST</span>
       </a>
@@ -124,18 +133,18 @@ Undersidor i /tjanster/: prefix `../` på ALLA länkar.
     </div>
     <div class="footer-col">
       <h4>Länkar</h4>
-      <a href="TJANSTER.html">Tjänster</a>
-      <a href="PROCESS.html">Processen</a>
-      <a href="PRISER.html">Priser</a>
-      <a href="REFERENSER.html">Referenser</a>
-      <a href="STARTAPROJEKT.html">Starta projekt</a>
+      <a href="TJANSTER">Tjänster</a>
+      <a href="PROCESS">Processen</a>
+      <a href="PRISER">Priser</a>
+      <a href="REFERENSER">Referenser</a>
+      <a href="STARTAPROJEKT">Starta projekt</a>
     </div>
     <div class="footer-col">
       <h4>Tjänster</h4>
-      <a href="TJANSTER_HEMSIDOR.html">Hemsidor</a>
-      <a href="TJANSTER_SEO.html">Lokal SEO</a>
-      <a href="TJANSTER_AI.html">AI-receptionist</a>
-      <a href="TJANSTER_UH.html">Underhåll</a>
+      <a href="TJANSTER_HEMSIDOR">Hemsidor</a>
+      <a href="TJANSTER_SEO">Lokal SEO</a>
+      <a href="TJANSTER_AI">AI-receptionist</a>
+      <a href="TJANSTER_UH">Underhåll</a>
     </div>
     <div class="footer-col footer-nap">
       <h4>Kontakt</h4>
@@ -149,8 +158,8 @@ Undersidor i /tjanster/: prefix `../` på ALLA länkar.
     <div class="container footer-bottom-inner">
       <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
       <div class="footer-legal">
-        <a href="INTEGRITET.html">Integritetspolicy</a>
-        <a href="VILLKOR.html">Allmänna villkor</a>
+        <a href="INTEGRITET">Integritetspolicy</a>
+        <a href="VILLKOR">Allmänna villkor</a>
       </div>
     </div>
   </div>
@@ -165,6 +174,16 @@ Undersidor i /tjanster/: prefix `../` på ALLA länkar.
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
 <title>DIN UNIKA TITLE | Webbtjänst</title>
 <meta name="description" content="DIN UNIKA META (140–160 tecken, med sökord + nytta + CTA)">
 <link rel="canonical" href="https://www.webbtjanst.com/DIN-SIDA">

@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
 <title>Demo | Webbtjänst</title>
 <meta name="description" content="Visar den riktiga interaktiva demo-visningen från Websit-SAAS.">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,7 +31,7 @@
       ];
       var site = new URLSearchParams(window.location.search).get('site') || 'lume-architecture';
       if (allowed.indexOf(site) === -1) site = 'lume-architecture';
-      window.location.replace('github-demos/index.html?view=portfolio&demo=' + encodeURIComponent(site) + '&v=20260816-fullscreen');
+      window.location.replace('github-demos/?view=portfolio&demo=' + encodeURIComponent(site) + '&v=20260816-fullscreen');
     }());
   </script>
 </body>

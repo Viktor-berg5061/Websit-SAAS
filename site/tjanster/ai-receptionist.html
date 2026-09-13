@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
 <title>AI-receptionist som svarar dygnet runt | Webbtjänst</title>
 <meta name="description" content="Din AI-receptionist svarar direkt, dygnet runt, alla dagar. Bokar tider och vidarebefordrar rätt samtal. Från 3 500 kr/mån – igång på fyra dagar.">
 <link rel="canonical" href="https://www.webbtjanst.com/tjanster/ai-receptionist">
@@ -74,11 +84,11 @@
       <span class="brand-name">WEBBTJÄNST</span>
     </a>
     <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="../tjanster.html" class="active" aria-current="page">Tjänster</a>
-      <a href="../referenser.html">Referenser</a>
-      <a href="../process.html">Process</a>
-      <a href="../priser.html">Priser</a>
-      <a href="../starta-projekt.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+      <a href="../tjanster" class="active" aria-current="page">Tjänster</a>
+      <a href="../referenser">Referenser</a>
+      <a href="../process">Process</a>
+      <a href="../priser">Priser</a>
+      <a href="../starta-projekt" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
       <span></span><span></span><span></span>
@@ -90,13 +100,13 @@
     <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
     <nav aria-label="Mobilmeny">
       <a href="/">Start</a>
-      <a href="../tjanster.html" class="active" aria-current="page">Tjänster</a>
-      <a href="../referenser.html">Referenser</a>
-      <a href="../process.html">Process</a>
-      <a href="../priser.html">Priser</a>
-      <a href="../om-oss.html">Om oss</a>
-      <a href="../kontakt.html">Kontakt</a>
-      <a href="../starta-projekt.html" class="btn btn--primary btn--block">Starta Projekt</a>
+      <a href="../tjanster" class="active" aria-current="page">Tjänster</a>
+      <a href="../referenser">Referenser</a>
+      <a href="../process">Process</a>
+      <a href="../priser">Priser</a>
+      <a href="../om-oss">Om oss</a>
+      <a href="../kontakt">Kontakt</a>
+      <a href="../starta-projekt" class="btn btn--primary btn--block">Starta Projekt</a>
     </nav>
     <div class="nav-drawer__contact">
       <a href="tel:+46704949087">+46 70 494 90 87</a>
@@ -113,7 +123,7 @@
       <nav class="crumbs" aria-label="Brödsmulor">
         <a href="/">Start</a>
         <span class="sep" aria-hidden="true">→</span>
-        <a href="../tjanster.html">Tjänster</a>
+        <a href="../tjanster">Tjänster</a>
         <span class="sep" aria-hidden="true">→</span>
         <span aria-current="page">AI-receptionist</span>
       </nav>
@@ -176,7 +186,7 @@
             <li>Vidarebefordrar till rätt person</li>
             <li>Sammanfattning av varje samtal</li>
           </ul>
-          <a href="../starta-projekt.html" class="btn btn--primary btn--block">Välj Start</a>
+          <a href="../starta-projekt" class="btn btn--primary btn--block">Välj Start</a>
         </article>
         <article class="price-card price-card--featured">
 <h3>Tillväxt</h3>
@@ -190,7 +200,7 @@
             <li>Tränad på din bransch</li>
             <li>Skickar varma leads direkt till dig</li>
           </ul>
-          <a href="../starta-projekt.html" class="btn btn--primary btn--block">Välj Tillväxt</a>
+          <a href="../starta-projekt" class="btn btn--primary btn--block">Välj Tillväxt</a>
         </article>
         <article class="price-card">
           <h3>Premium</h3>
@@ -204,7 +214,7 @@
             <li>Månadsrapport över samtal och bokningar</li>
             <li>Prioriterad support</li>
           </ul>
-          <a href="../starta-projekt.html" class="btn btn--primary btn--block">Välj Premium</a>
+          <a href="../starta-projekt" class="btn btn--primary btn--block">Välj Premium</a>
         </article>
       </div>
     </div>
@@ -293,8 +303,8 @@
           <p>Din AI-receptionist kan svara på kundsamtal redan nästa vecka. Börja med ett formulär – det tar fem minuter.</p>
         </div>
         <div class="cta-band__actions">
-          <a class="btn btn--accent btn--lg" href="../starta-projekt.html">Starta ditt projekt</a>
-          <a class="btn btn--outline btn--lg" href="../priser.html">Se priser</a>
+          <a class="btn btn--accent btn--lg" href="../starta-projekt">Starta ditt projekt</a>
+          <a class="btn btn--outline btn--lg" href="../priser">Se priser</a>
         </div>
       </div>
     </div>
@@ -313,18 +323,18 @@
     </div>
     <div class="footer-col">
       <h4>Länkar</h4>
-      <a href="../tjanster.html">Tjänster</a>
-      <a href="../process.html">Processen</a>
-      <a href="../priser.html">Priser</a>
-      <a href="../referenser.html">Referenser</a>
-      <a href="../starta-projekt.html">Starta projekt</a>
+      <a href="../tjanster">Tjänster</a>
+      <a href="../process">Processen</a>
+      <a href="../priser">Priser</a>
+      <a href="../referenser">Referenser</a>
+      <a href="../starta-projekt">Starta projekt</a>
     </div>
     <div class="footer-col">
       <h4>Tjänster</h4>
-      <a href="../tjanster/hemsidor.html">Hemsidor</a>
-      <a href="../tjanster/lokal-seo.html">Lokal SEO</a>
-      <a href="../tjanster/ai-receptionist.html">AI-receptionist</a>
-      <a href="../tjanster/underhall.html">Underhåll</a>
+      <a href="../tjanster/hemsidor">Hemsidor</a>
+      <a href="../tjanster/lokal-seo">Lokal SEO</a>
+      <a href="../tjanster/ai-receptionist">AI-receptionist</a>
+      <a href="../tjanster/underhall">Underhåll</a>
     </div>
     <div class="footer-col footer-nap">
       <h4>Kontakt</h4>
@@ -338,8 +348,8 @@
     <div class="container footer-bottom-inner">
       <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
       <div class="footer-legal">
-        <a href="../integritetspolicy.html">Integritetspolicy</a>
-        <a href="../villkor.html">Allmänna villkor</a>
+        <a href="../integritetspolicy">Integritetspolicy</a>
+        <a href="../villkor">Allmänna villkor</a>
       </div>
     </div>
   </div>

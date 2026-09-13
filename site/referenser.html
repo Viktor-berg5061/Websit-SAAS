@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script data-clean-public-url>
+  (function () {
+    var path = window.location.pathname;
+    if (!path.endsWith(".html")) return;
+    var cleanPath = path.endsWith("/index.html")
+      ? path.slice(0, -10) || "/"
+      : path.slice(0, -5);
+    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+  })();
+</script>
 <title>Referenser | Webbtjänst – 9 interaktiva demo-vyer</title>
 <meta name="description" content="Se nio interaktiva demo-vyer från Webbtjänst: arkitektur, catering, SaaS, juridik, e-handel, AI och mer. Klicka in och testa olika uttryck och upplägg.">
 <link rel="canonical" href="https://www.webbtjanst.com/referenser">
@@ -53,11 +63,11 @@
       <span class="brand-name">WEBBTJÄNST</span>
     </a>
     <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="tjanster.html">Tjänster</a>
-      <a href="referenser.html" class="active" aria-current="page">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="referenser" class="active" aria-current="page">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="starta-projekt" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
       <span></span><span></span><span></span>
@@ -69,13 +79,13 @@
     <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
     <nav aria-label="Mobilmeny">
       <a href="/">Start</a>
-      <a href="tjanster.html">Tjänster</a>
-      <a href="referenser.html" class="active" aria-current="page">Referenser</a>
-      <a href="process.html">Process</a>
-      <a href="priser.html">Priser</a>
-      <a href="om-oss.html">Om oss</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="starta-projekt.html" class="btn btn--primary btn--block">Starta Projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="referenser" class="active" aria-current="page">Referenser</a>
+      <a href="process">Process</a>
+      <a href="priser">Priser</a>
+      <a href="om-oss">Om oss</a>
+      <a href="kontakt">Kontakt</a>
+      <a href="starta-projekt" class="btn btn--primary btn--block">Starta Projekt</a>
     </nav>
     <div class="nav-drawer__contact">
       <a href="tel:+46704949087">+46 70 494 90 87</a>
@@ -103,7 +113,7 @@
   <section class="section">
     <div class="container">
       <div class="grid grid--3">
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=lume-architecture&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Lume Architecture">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=lume-architecture&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Lume Architecture">
           <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=900&h=700&auto=format&fit=crop" alt="Ljus arkitektur i vit betong – Lume Architecture" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Design &amp; Arkitektur</span>
@@ -113,7 +123,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=savor-catering&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Savor Catering">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=savor-catering&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Savor Catering">
           <img src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=900&h=700&auto=format&fit=crop" alt="Kock som anrättar mat – Savor Catering" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Mat &amp; Restaurang</span>
@@ -123,7 +133,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=nova-tech-saas&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nova Tech SaaS">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=nova-tech-saas&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nova Tech SaaS">
           <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=900&h=700&auto=format&fit=crop" alt="Kodeditor på skärm – Nova Tech SaaS" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Teknik &amp; Mjukvara</span>
@@ -133,7 +143,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=vantage-legal&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Legal">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=vantage-legal&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Legal">
           <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=900&h=700&auto=format&fit=crop" alt="Dokument och penna på skrivbord – Vantage Legal" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Juridik &amp; Finans</span>
@@ -143,7 +153,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=studio-pulse&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Studio Pulse">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=studio-pulse&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Studio Pulse">
           <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=900&h=700&auto=format&fit=crop" alt="Designverktyg och färgprover – Studio Pulse" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Kreativ Byrå</span>
@@ -153,7 +163,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=ecogarden-shop&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: EcoGarden Shop">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=ecogarden-shop&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: EcoGarden Shop">
           <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=900&h=700&auto=format&fit=crop" alt="Blommande trädgård – EcoGarden Shop" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">E-handel</span>
@@ -163,7 +173,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=quantum-ai&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Quantum AI">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=quantum-ai&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Quantum AI">
           <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=900&h=700&auto=format&fit=crop" alt="Mörk teknikmiljö med ljus – Quantum AI" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Framtidsteknik</span>
@@ -173,7 +183,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=nordic-home&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nordic Home">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=nordic-home&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Nordic Home">
           <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=900&h=700&auto=format&fit=crop" alt="Modern villa i kvällsljus – Nordic Home" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Fastigheter</span>
@@ -183,7 +193,7 @@
             <span class="demo-link" aria-hidden="true">Öppna full demo</span>
           </div>
         </a>
-        <a class="ref-card ref-card--link" href="github-demos/index.html?view=portfolio&amp;demo=vantage-fitness&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Fitness">
+        <a class="ref-card ref-card--link" href="github-demos/?view=portfolio&amp;demo=vantage-fitness&amp;from=referenser&amp;v=20260816-fullscreen" aria-label="Öppna full demo: Vantage Fitness">
           <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=900&h=700&auto=format&fit=crop" alt="Modernt gym med vikter – Vantage Fitness" width="900" height="700" loading="lazy">
           <div class="ref-card__body">
             <span class="ref-card__cat">Hälsa &amp; Sport</span>
@@ -210,7 +220,7 @@
             <strong>24–48 timmar, hela vägen</strong>
             <p>Demo-vyerna visar olika riktningar för struktur, innehåll och känsla. Din sajt får samma fokuserade process, anpassad efter ditt företag.</p>
           </div>
-          <a href="starta-projekt.html" class="btn btn--primary">Starta ditt projekt</a>
+          <a href="starta-projekt" class="btn btn--primary">Starta ditt projekt</a>
         </div>
       </div>
     </div>
@@ -225,8 +235,8 @@
           <p>Din bransch kan vara nästa kort i raden. Vi sätter igång inom 24 timmar.</p>
         </div>
         <div class="cta-band__actions">
-          <a href="starta-projekt.html" class="btn btn--accent btn--lg">Starta ditt projekt</a>
-          <a href="priser.html" class="btn btn--outline btn--lg">Se priser</a>
+          <a href="starta-projekt" class="btn btn--accent btn--lg">Starta ditt projekt</a>
+          <a href="priser" class="btn btn--outline btn--lg">Se priser</a>
         </div>
       </div>
     </div>
@@ -245,18 +255,18 @@
     </div>
     <div class="footer-col">
       <h4>Länkar</h4>
-      <a href="tjanster.html">Tjänster</a>
-      <a href="process.html">Processen</a>
-      <a href="priser.html">Priser</a>
-      <a href="referenser.html">Referenser</a>
-      <a href="starta-projekt.html">Starta projekt</a>
+      <a href="tjanster">Tjänster</a>
+      <a href="process">Processen</a>
+      <a href="priser">Priser</a>
+      <a href="referenser">Referenser</a>
+      <a href="starta-projekt">Starta projekt</a>
     </div>
     <div class="footer-col">
       <h4>Tjänster</h4>
-      <a href="tjanster/hemsidor.html">Hemsidor</a>
-      <a href="tjanster/lokal-seo.html">Lokal SEO</a>
-      <a href="tjanster/ai-receptionist.html">AI-receptionist</a>
-      <a href="tjanster/underhall.html">Underhåll</a>
+      <a href="tjanster/hemsidor">Hemsidor</a>
+      <a href="tjanster/lokal-seo">Lokal SEO</a>
+      <a href="tjanster/ai-receptionist">AI-receptionist</a>
+      <a href="tjanster/underhall">Underhåll</a>
     </div>
     <div class="footer-col footer-nap">
       <h4>Kontakt</h4>
@@ -270,8 +280,8 @@
     <div class="container footer-bottom-inner">
       <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
       <div class="footer-legal">
-        <a href="integritetspolicy.html">Integritetspolicy</a>
-        <a href="villkor.html">Allmänna villkor</a>
+        <a href="integritetspolicy">Integritetspolicy</a>
+        <a href="villkor">Allmänna villkor</a>
       </div>
     </div>
   </div>
