@@ -51,6 +51,116 @@ const LEAD_SITE_KEY = "webbtjanst";
     });
   }
 
+  /* ---------- Boka möte i alla navigeringar ---------- */
+  document.querySelectorAll(".site-nav").forEach(function (nav) {
+    if (nav.querySelector('a[href="boka-mote.html"]')) return;
+    var link = document.createElement("a");
+    link.href = "boka-mote.html";
+    link.textContent = "Boka möte";
+    var cta = nav.querySelector(".nav-cta");
+    nav.insertBefore(link, cta || null);
+  });
+  document.querySelectorAll(".nav-drawer nav").forEach(function (nav) {
+    if (nav.querySelector('a[href="boka-mote.html"]')) return;
+    var link = document.createElement("a");
+    link.href = "boka-mote.html";
+    link.textContent = "Boka möte";
+    var cta = nav.querySelector(".btn");
+    nav.insertBefore(link, cta || null);
+    link.addEventListener("click", closeMenu);
+  });
+
+  /* ---------- Bokningssida: välj mötesperson ---------- */
+  var bookingPeople = document.querySelectorAll("[data-booking-person]");
+  var bookingPanels = document.querySelectorAll("[data-booking-panel]");
+  var activeBookingWrap = null;
+  var openingBookingWrap = null;
+  var openingBookingTimer = null;
+
+  function queueBookingOverlay(wrap) {
+    if (activeBookingWrap === wrap || openingBookingWrap === wrap) return;
+    if (openingBookingTimer) window.clearTimeout(openingBookingTimer);
+    if (openingBookingWrap) openingBookingWrap.classList.remove("is-opening");
+    openingBookingWrap = wrap;
+    wrap.classList.add("is-opening");
+    openingBookingTimer = window.setTimeout(function () {
+      wrap.classList.remove("is-opening");
+      openingBookingWrap = null;
+      openingBookingTimer = null;
+      openBookingOverlay(wrap);
+    }, 550);
+  }
+
+  function openBookingOverlay(wrap) {
+    if (activeBookingWrap === wrap) return;
+    closeBookingOverlay();
+    activeBookingWrap = wrap;
+    wrap.classList.add("is-booking-active");
+    document.body.classList.add("booking-form-open");
+  }
+
+  function closeBookingOverlay() {
+    if (openingBookingTimer) window.clearTimeout(openingBookingTimer);
+    if (openingBookingWrap) openingBookingWrap.classList.remove("is-opening");
+    openingBookingTimer = null;
+    openingBookingWrap = null;
+    if (!activeBookingWrap) return;
+    var activeFrame = activeBookingWrap.querySelector(".booking-frame");
+    activeBookingWrap.classList.remove("is-booking-active");
+    document.body.classList.remove("booking-form-open");
+    // Google keeps its internal form open after the parent layer closes.
+    // Reload only that iframe so the inline view returns to date and time selection.
+    if (activeFrame) {
+      var resetWrap = activeBookingWrap;
+      resetWrap.classList.add("is-resetting");
+      activeFrame.addEventListener("load", function () {
+        resetWrap.classList.remove("is-resetting");
+      }, { once: true });
+      activeFrame.src = activeFrame.src;
+    }
+    activeBookingWrap = null;
+  }
+
+  document.querySelectorAll(".booking-frame-wrap").forEach(function (wrap) {
+    var frame = wrap.querySelector(".booking-frame");
+    var close = wrap.querySelector(".booking-overlay-close");
+    if (!frame || !close) return;
+
+    frame.addEventListener("focus", function () {
+      queueBookingOverlay(wrap);
+    });
+    close.addEventListener("click", closeBookingOverlay);
+  });
+
+  // Clicking inside a cross-origin iframe moves focus away from the parent window.
+  // This fallback covers browsers that do not dispatch focus directly on the iframe.
+  window.addEventListener("blur", function () {
+    window.setTimeout(function () {
+      var frame = document.activeElement;
+      if (frame && frame.classList && frame.classList.contains("booking-frame")) {
+        queueBookingOverlay(frame.closest(".booking-frame-wrap"));
+      }
+    }, 0);
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeBookingOverlay();
+  });
+  bookingPeople.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var selected = button.getAttribute("data-booking-person");
+      closeBookingOverlay();
+      bookingPeople.forEach(function (item) {
+        var active = item === button;
+        item.classList.toggle("is-selected", active);
+        item.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+      bookingPanels.forEach(function (panel) {
+        panel.hidden = panel.getAttribute("data-booking-panel") !== selected;
+      });
+    });
+  });
+
   /* ---------- Aktuellt år i footer ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = String(new Date().getFullYear());

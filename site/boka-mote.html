@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boka telefonmöte | Webbtjänst</title>
+<meta name="description" content="Boka ett kostnadsfritt telefonmöte med Webbtjänst. Välj vem du vill prata med och en kvällstid som passar dig.">
+<link rel="canonical" href="https://www.webbtjanst.com/boka-mote">
+<meta property="og:title" content="Boka telefonmöte | Webbtjänst">
+<meta property="og:description" content="Välj en ledig kvällstid och berätta kort vad du vill få hjälp med. Vi ringer upp dig.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.webbtjanst.com/boka-mote">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script defer src="assets/js/main.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Webbtjänst – startsida">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">WEBBTJÄNST</span>
+    </a>
+    <nav class="site-nav" aria-label="Huvudmeny">
+      <a href="tjanster.html">Tjänster</a>
+      <a href="referenser.html">Referenser</a>
+      <a href="process.html">Process</a>
+      <a href="priser.html">Priser</a>
+      <a href="boka-mote.html" class="active" aria-current="page">Boka möte</a>
+      <a href="starta-projekt.html" class="btn btn--primary btn--sm nav-cta">Starta Projekt</a>
+    </nav>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Öppna meny">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+  <div class="nav-drawer__panel">
+    <button class="nav-drawer__close" aria-label="Stäng meny">×</button>
+    <nav aria-label="Mobilmeny">
+      <a href="/">Start</a>
+      <a href="tjanster.html">Tjänster</a>
+      <a href="referenser.html">Referenser</a>
+      <a href="process.html">Process</a>
+      <a href="priser.html">Priser</a>
+      <a href="om-oss.html">Om oss</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="boka-mote.html" class="active" aria-current="page">Boka möte</a>
+      <a href="starta-projekt.html" class="btn btn--primary btn--block">Starta Projekt</a>
+    </nav>
+    <div class="nav-drawer__contact">
+      <a href="tel:+46704949087">+46 70 494 90 87</a>
+      <a href="mailto:vberg024@gmail.com">vberg024@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="page-hero booking-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Brödsmulor">
+        <a href="/">Start</a>
+        <span aria-hidden="true">→</span>
+        <span aria-current="page">Boka möte</span>
+      </nav>
+      <span class="eyebrow">KOSTNADSFRITT TELEFONMÖTE</span>
+      <h1>Välj en tid för ett <span class="accent">första samtal</span></h1>
+      <div class="booking-facts" aria-label="Så fungerar mötet">
+        <span>30 minuter</span>
+        <span>Telefonmöte</span>
+        <span>Lediga tider från 17:00</span>
+        <span>Minst 1 timmes framförhållning</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section booking-section">
+    <div class="container">
+      <div class="section-head section-head--compact">
+        <span class="eyebrow">STEG 1</span>
+        <h2>Vem vill du prata med?</h2>
+        <p>Välj person först. Kalendern visar sedan bara tider som faktiskt är lediga.</p>
+      </div>
+
+      <div class="booking-people" role="group" aria-label="Välj mötesperson">
+        <button class="booking-person is-selected" type="button" data-booking-person="viktor" aria-pressed="true">
+          <span class="booking-person__avatar" aria-hidden="true">VB</span>
+          <span class="booking-person__copy">
+            <strong>Viktor</strong>
+            <small>Hemsidor, strategi, priser och nästa steg</small>
+          </span>
+          <span class="booking-person__status">Kalender ansluten</span>
+        </button>
+        <button class="booking-person" type="button" data-booking-person="john" aria-pressed="false">
+          <span class="booking-person__avatar booking-person__avatar--alt" aria-hidden="true">J</span>
+          <span class="booking-person__copy">
+            <strong>John</strong>
+            <small>Projektfrågor och teknisk genomgång</small>
+          </span>
+          <span class="booking-person__status">Kalender ansluten</span>
+        </button>
+      </div>
+
+      <div class="booking-panel" data-booking-panel="viktor">
+        <div class="booking-panel__intro">
+          <div><span class="eyebrow">STEG 2 · VIKTOR</span><h2>Välj en ledig kvällstid</h2></div>
+          <p>Kalendern visar bara tider som faktiskt är lediga.</p>
+        </div>
+          <div class="booking-frame-stack">
+            <div class="booking-frame-mirror" aria-hidden="true">
+              <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3nzDrVEVmyvykWsrDviSC-ifwwLA-aociCChRaZWPZb24r0_y7hY1XfiLt5Wv56mABCST6MIKw?gv=true" tabindex="-1" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="booking-frame-wrap">
+              <button class="booking-overlay-close" type="button" aria-label="Stäng bokningsformuläret">×</button>
+              <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3nzDrVEVmyvykWsrDviSC-ifwwLA-aociCChRaZWPZb24r0_y7hY1XfiLt5Wv56mABCST6MIKw?gv=true" title="Boka telefonmöte med Viktor" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+      </div>
+      <div class="booking-panel" data-booking-panel="john" hidden>
+        <div class="booking-panel__intro">
+          <div><span class="eyebrow">STEG 2 · JOHN</span><h2>Välj en ledig kvällstid</h2></div>
+          <p>Kalendern visar bara tider som faktiskt är lediga.</p>
+        </div>
+          <div class="booking-frame-stack">
+            <div class="booking-frame-mirror" aria-hidden="true">
+              <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ36oa6VTgUDIasxjPqo5uNpXqmBDtlSAzcCs4tENmdZOe9oWsUCHBqbPF-9YYhHwNN7cid9fANC?gv=true" tabindex="-1" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="booking-frame-wrap">
+              <button class="booking-overlay-close" type="button" aria-label="Stäng bokningsformuläret">×</button>
+              <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ36oa6VTgUDIasxjPqo5uNpXqmBDtlSAzcCs4tENmdZOe9oWsUCHBqbPF-9YYhHwNN7cid9fANC?gv=true" title="Boka telefonmöte med John" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+      </div>
+      <aside class="booking-prep" aria-labelledby="booking-prep-title">
+        <div>
+          <span class="eyebrow">INFÖR SAMTALET</span>
+          <h2 id="booking-prep-title">Några rader räcker</h2>
+        </div>
+        <ul>
+          <li>Ditt namn och företagets namn</li>
+          <li>Telefonnummer och e-post</li>
+          <li>Hur du hittade Webbtjänst</li>
+          <li>Vad du tvekar över eller vill få förklarat</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand--light" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">WEBBTJÄNST</span>
+      </a>
+      <p>Professionella hemsidor på 24–48 timmar för lokala serviceföretag. Snabbhet utan att offra kvalitet.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Länkar</h4>
+      <a href="tjanster.html">Tjänster</a>
+      <a href="process.html">Processen</a>
+      <a href="priser.html">Priser</a>
+      <a href="referenser.html">Referenser</a>
+      <a href="boka-mote.html">Boka möte</a>
+      <a href="starta-projekt.html">Starta projekt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tjänster</h4>
+      <a href="tjanster/hemsidor.html">Hemsidor</a>
+      <a href="tjanster/lokal-seo.html">Lokal SEO</a>
+      <a href="tjanster/ai-receptionist.html">AI-receptionist</a>
+      <a href="tjanster/underhall.html">Underhåll</a>
+    </div>
+    <div class="footer-col footer-nap">
+      <h4>Kontakt</h4>
+      <a href="mailto:vberg024@gmail.com">vberg024@gmail.com</a>
+      <a href="tel:+46704949087">+46 70 494 90 87</a>
+      <span>Digitalvägen 1, 111 57 Stockholm</span>
+      <span>Mån–Fre 08:00–18:00</span>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© <span data-year></span> Webbtjänst. Alla rättigheter förbehållna.</p>
+      <div class="footer-legal">
+        <a href="integritetspolicy.html">Integritetspolicy</a>
+        <a href="villkor.html">Allmänna villkor</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

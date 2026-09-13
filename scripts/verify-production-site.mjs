@@ -4,6 +4,7 @@ import path from "node:path";
 const root = path.resolve("site");
 const required = [
   "index.html",
+  "boka-mote.html",
   "starta-projekt.html",
   "robots.txt",
   "sitemap.xml",
@@ -77,6 +78,13 @@ if (!project.includes("https://neat-gnu-616.convex.site/api/checkout/session")) 
 const mainJs = fs.readFileSync(path.join(root, "assets", "js", "main.js"), "utf8");
 if (!mainJs.includes("https://neat-gnu-616.convex.site/api/lead")) {
   throw new Error("Production lead endpoint is missing");
+}
+const booking = fs.readFileSync(path.join(root, "boka-mote.html"), "utf8");
+if (!booking.includes("https://calendar.google.com/calendar/appointments/schedules/")) {
+  throw new Error("Google booking schedule is missing");
+}
+if (!booking.includes('data-booking-person="viktor"') || !booking.includes('data-booking-person="john"')) {
+  throw new Error("Booking-person choices are incomplete");
 }
 
 const combined = inspectable.map((file) => fs.readFileSync(file, "utf8")).join("\n");
