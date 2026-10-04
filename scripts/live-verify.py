@@ -85,7 +85,7 @@ def http_check(sitemap_urls: list[str]) -> list[str]:
         )
         if not title:
             problems.append(f"{path}: ingen title")
-        if not canon:
+        if not canon and not noindex:
             problems.append(f"{path}: ingen canonical")
         if words < 200 and not path.startswith("/github-demos"):
             problems.append(f"{path}: bara {words} ord")

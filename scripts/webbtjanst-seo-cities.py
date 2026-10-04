@@ -249,7 +249,7 @@ def build_city(city: dict, head: str, tail: str) -> str:
         <p class="lede">{city["competition"]}</p>
       </div>
       <div class="grid grid--3">
-{card(f"Nära mig-sökningar", f"När någon söker på din tjänst och klickar i kartan avgör din Google Business Profile. Vi kopplar profilen till hemsidan och ser till att område, öppettider och tjänster stämmer för {name}.", ICON_MAP)}{card("Tjänst + område", f"Vi bygger en sida per tjänst och område i {name}: {districts.lower()}. Varje sida matchar exakt det kunder skriver i sökrutan.", ICON_SEARCH)}{card("Mätbar utveckling", f"Du ser vilka sökord som ger visningar och klick i {name}, och vilka sidor som behöver byggas om. Rapporten kommer varje månad.", ICON_CHART)}      </div>
+{card(f"Nära mig-sökningar", f"När någon söker på din tjänst och klickar i kartan avgör din Google Business Profile. Vi kopplar profilen till hemsidan och ser till att område, öppettider och tjänster stämmer för {name}.", ICON_MAP)}{card("Tjänst + område", f"Vi bygger en sida per tjänst och område i {name}: {districts}. Varje sida matchar exakt det kunder skriver i sökrutan.", ICON_SEARCH)}{card("Mätbar utveckling", f"Du ser vilka sökord som ger visningar och klick i {name}, och vilka sidor som behöver byggas om. Rapporten kommer varje månad.", ICON_CHART)}      </div>
     </div>
   </section>
 
@@ -262,7 +262,7 @@ def build_city(city: dict, head: str, tail: str) -> str:
       </div>
       <div class="grid grid--2">
         <div>
-          <p><strong>Områden:</strong> {districts}. Kör du utanför stadskärnan bygger vi även in {nearby} – till exempel ”{city['industries'][0]} {city['nearby'][0].lower()}”.</p>
+          <p><strong>Områden:</strong> {districts}. Kör du utanför stadskärnan bygger vi även in {nearby} – till exempel ”{city['industries'][0]} {city['nearby'][0]}”.</p>
           <p><strong>Branscher vi ser mest av i {name}:</strong> {", ".join(city['industries'])}. Det är också där vi vet vilka sökord som faktiskt leder till jobb i stället för bara visningar.</p>
           <p>Om du redan har en hemsida bygger vi vidare på den. Har du ingen bygger vi en ny i samma stil som övriga sajten – live på 24–48 timmar – och lägger in lokal SEO från start.</p>
         </div>

@@ -154,6 +154,16 @@ BRANCHES = [
 ]
 
 
+CALLBACKS = {
+    "rormokare": "Jag har en läckande kran under diskbänken.",
+    "elektriker": "Jordfelsbrytaren löser ut hela tiden.",
+    "hantverkare": "Vi vill bygga en altan i sommar.",
+    "bilverkstad": "Jag behöver boka en stor service.",
+    "tandlakare": "Jag har haft tandvärk sedan i går.",
+    "frisor": "Har ni tid för en klippning på fredag?",
+}
+
+
 def read(p: pathlib.Path) -> str:
     return p.read_text(encoding="utf-8")
 
@@ -344,7 +354,7 @@ def build_branch(branch: dict, head: str, tail: str) -> str:
           <strong>Så låter ett samtal</strong>
           <p><em>Kund:</em> Hej, kan ni komma i morgon?<br>
           <em>AI:</em> Hej! Det beror på vad det gäller – berätta kort, så bokar jag in rätt tid hos oss.</p>
-          <p><em>Kund:</em> Det gäller {branch["questions"][0].strip("”")}<br>
+          <p><em>Kund:</em> {CALLBACKS[branch["slug"]]}<br>
           <em>AI:</em> Tack. Jag har en ledig tid i morgon klockan 08:00. Passar det, eller vill du se fler tider?</p>
           <p>Samtalet sammanfattas och skickas till dig direkt efteråt.</p>
         </aside>
