@@ -14,6 +14,23 @@ Vi levererar hemsidor, lokal SEO, AI-receptionist, cookie- och GDPR-granskning s
 - [Underhåll](https://www.webbtjanst.com/tjanster/underhall): Sajten växer varje månad, från 1 200 kr/mån.
 - [Cookie- och GDPR-granskning](https://www.webbtjanst.com/tjanster/cookie-gdpr): Vi mäter spårning som startar före samtycke, åtgärdar den och dokumenterar. 45 000 kr engångsavgift.
 
+## Lokal SEO per stad
+- [Lokal SEO Stockholm](https://www.webbtjanst.com/tjanster/lokal-seo-stockholm): Lokal SEO för företag i Stockholm och närområdet.
+- [Lokal SEO Göteborg](https://www.webbtjanst.com/tjanster/lokal-seo-goteborg): Lokal SEO för företag i Göteborg och närområdet.
+- [Lokal SEO Malmö](https://www.webbtjanst.com/tjanster/lokal-seo-malmo): Lokal SEO för företag i Malmö och närområdet.
+- [Lokal SEO Uppsala](https://www.webbtjanst.com/tjanster/lokal-seo-uppsala): Lokal SEO för företag i Uppsala och närområdet.
+- [Lokal SEO Västerås](https://www.webbtjanst.com/tjanster/lokal-seo-vasteras): Lokal SEO för företag i Västerås och närområdet.
+- [Lokal SEO Örebro](https://www.webbtjanst.com/tjanster/lokal-seo-orebro): Lokal SEO för företag i Örebro och närområdet.
+
+## AI-receptionist per bransch
+- [AI-receptionist för Rörmokare](https://www.webbtjanst.com/tjanster/ai-receptionist-rormokare): AI-telefonist som svarar kunder i Rörmokare-branschen dygnet runt.
+- [AI-receptionist för Elektriker](https://www.webbtjanst.com/tjanster/ai-receptionist-elektriker): AI-telefonist som svarar kunder i Elektriker-branschen dygnet runt.
+- [AI-receptionist för Hantverkare](https://www.webbtjanst.com/tjanster/ai-receptionist-hantverkare): AI-telefonist som svarar kunder i Hantverkare-branschen dygnet runt.
+- [AI-receptionist för Bilverkstad](https://www.webbtjanst.com/tjanster/ai-receptionist-bilverkstad): AI-telefonist som svarar kunder i Bilverkstad-branschen dygnet runt.
+- [AI-receptionist för Tandläkare](https://www.webbtjanst.com/tjanster/ai-receptionist-tandlakare): AI-telefonist som svarar kunder i Tandläkare-branschen dygnet runt.
+- [AI-receptionist för Frisör](https://www.webbtjanst.com/tjanster/ai-receptionist-frisor): AI-telefonist som svarar kunder i Frisör-branschen dygnet runt.
+- [AI receptionist pris](https://www.webbtjanst.com/tjanster/ai-receptionist-pris): Vad en AI-receptionist kostar per månad och vad som ingår.
+
 ## Priser
 - [Priser](https://www.webbtjanst.com/priser): Start 15 000 kr, Tillväxt 30 000 kr, Premium 60 000 kr. Underhåll från 1 200 kr/mån. AI-receptionist från 3 500 kr/mån.
 
@@ -25,3 +42,7 @@ Vi levererar hemsidor, lokal SEO, AI-receptionist, cookie- och GDPR-granskning s
 - [Starta projekt](https://www.webbtjanst.com/starta-projekt): Fyll i formuläret så återkommer vi inom 1 arbetsdag.
 - [Integritetspolicy](https://www.webbtjanst.com/integritetspolicy)
 - [Allmänna villkor](https://www.webbtjanst.com/villkor)
+
+## Guider
+- [Vad kostar en hemsida?](https://www.webbtjanst.com/guider/vad-kostar-en-hemsida): Priser, paket och löpande kostnader förklarade.
+- [Lokal SEO-guide](https://www.webbtjanst.com/guider/lokal-seo-guide): Sju steg för att ranka lokalt med hemsida och Google Business Profile.
