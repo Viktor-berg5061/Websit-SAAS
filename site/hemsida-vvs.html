@@ -10,7 +10,7 @@
     var cleanPath = path.endsWith("/index.html")
       ? path.slice(0, -10) || "/"
       : path.slice(0, -5);
-    window.history.replaceState(null, "", cleanPath + window.location.search + window.location.hash);
+    window.location.replace(cleanPath + window.location.search + window.location.hash);
   })();
 </script>
 <title>Hemsida för VVS | Webbtjänst</title>
